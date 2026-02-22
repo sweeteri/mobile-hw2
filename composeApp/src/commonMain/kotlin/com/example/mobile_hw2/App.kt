@@ -1,33 +1,34 @@
 package com.example.mobile_hw2
 
+import com.example.mobile_hw2.navigation.Screen
+import com.example.mobile_hw2.screens.welcome.WelcomeScreen
+import com.example.mobile_hw2.screens.login.LoginScreen
+
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
+
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxSize
+
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+
 import androidx.compose.runtime.Composable
+
 import androidx.compose.ui.Modifier
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.tooling.preview.Preview
+
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mobile_hw2.screens.WelcomeScreen
-import com.example.mobile_hw2.screens.LoginScreen
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
 
 
 @Composable
 @Preview
 fun App() {
-    val useDarkTheme = isSystemInDarkTheme()
-
-    val colorScheme = if (useDarkTheme) {
-        darkColorScheme()
-    } else {
-        lightColorScheme()
-    }
+    val colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
 
     MaterialTheme(colorScheme = colorScheme) {
         Surface(
@@ -38,33 +39,36 @@ fun App() {
 
             NavHost(
                 navController = navController,
-                startDestination = "welcome",
-                enterTransition = {
-                    slideInHorizontally(
-                        animationSpec = tween(500),
-                        initialOffsetX = { it }) + fadeIn(tween(500))
-                },
+                startDestination = Screen.Welcome.route,
+
+                enterTransition = { slideInHorizontally(tween(500), { it }) + fadeIn(tween(500)) },
                 exitTransition = {
                     slideOutHorizontally(
-                        animationSpec = tween(500),
-                        targetOffsetX = { -it }) + fadeOut(tween(500))
+                        tween(500),
+                        { -it }) + fadeOut(tween(500))
                 },
                 popEnterTransition = {
                     slideInHorizontally(
-                        animationSpec = tween(500),
-                        initialOffsetX = { -it }) + fadeIn(tween(500))
+                        tween(500),
+                        { -it }) + fadeIn(tween(500))
                 },
                 popExitTransition = {
                     slideOutHorizontally(
-                        animationSpec = tween(500),
-                        targetOffsetX = { it }) + fadeOut(tween(500))
+                        tween(500),
+                        { it }) + fadeOut(tween(500))
                 }
             ) {
-                composable("welcome") {
-                    WelcomeScreen(onLoginClick = { navController.navigate("login") })
+                composable(Screen.Welcome.route) {
+                    WelcomeScreen(onLoginClick = {
+                        navController.navigate(Screen.Login.route)
+                    })
                 }
-                composable("login") {
-                    LoginScreen()
+                composable(Screen.Login.route) {
+                    LoginScreen(
+                        onBackClick = {
+                            navController.popBackStack()
+                        }
+                    )
                 }
             }
         }
