@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 import androidx.compose.runtime.Composable
 
 import androidx.compose.ui.Modifier
@@ -41,7 +43,7 @@ import androidx.compose.foundation.layout.Row
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: LoginViewModel = viewModel(),
     onRegisterClick: () -> Unit = {},
     onBackClick: () -> Unit
 ) {
