@@ -41,6 +41,19 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.foundation.layout.Row
 
+import org.jetbrains.compose.resources.stringResource
+import com.example.mobile_hw2.generated.resources.Res
+import com.example.mobile_hw2.generated.resources.back_button_description
+import com.example.mobile_hw2.generated.resources.create_account_button
+import com.example.mobile_hw2.generated.resources.forgot_password
+import com.example.mobile_hw2.generated.resources.login_button
+import com.example.mobile_hw2.generated.resources.login_label
+import com.example.mobile_hw2.generated.resources.login_placeholder
+import com.example.mobile_hw2.generated.resources.login_screen_title
+import com.example.mobile_hw2.generated.resources.no_account_text
+import com.example.mobile_hw2.generated.resources.password_label
+import com.example.mobile_hw2.generated.resources.password_placeholder
+
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
@@ -81,7 +94,7 @@ private fun LoginContent(
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад"
+                            contentDescription = stringResource(Res.string.back_button_description)
                         )
                     }
                 }
@@ -97,7 +110,7 @@ private fun LoginContent(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Вход в систему",
+                text = stringResource(Res.string.login_screen_title),
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier.fillMaxWidth()
@@ -108,9 +121,9 @@ private fun LoginContent(
             OutlinedTextField(
                 value = email,
                 onValueChange = onEmailChange,
-                label = { Text("Логин") },
+                label = { Text(stringResource(Res.string.login_label)) },
                 leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
-                placeholder = { Text("Введите ваш email") },
+                placeholder = { Text(stringResource(Res.string.login_placeholder)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.large,
                 singleLine = true,
@@ -122,7 +135,7 @@ private fun LoginContent(
             OutlinedTextField(
                 value = password,
                 onValueChange = onPasswordChange,
-                label = { Text("Пароль") },
+                label = { Text(stringResource(Res.string.password_label)) },
                 leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
                 trailingIcon = {
                     IconButton(onClick = onTogglePasswordVisibility) {
@@ -131,7 +144,7 @@ private fun LoginContent(
                         Icon(icon, null)
                     }
                 },
-                placeholder = { Text("Введите пароль") },
+                placeholder = { Text(stringResource(Res.string.password_placeholder)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.large,
                 singleLine = true,
@@ -142,8 +155,12 @@ private fun LoginContent(
                 onClick = { /* Напомнить пароль */ },
                 modifier = Modifier.align(Alignment.End)
             ) {
-                Text("Забыли пароль?", style = MaterialTheme.typography.labelLarge)
+                Text(
+                    stringResource(Res.string.forgot_password),
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
+
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
@@ -153,22 +170,27 @@ private fun LoginContent(
                     .height(56.dp),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
             ) {
-                Text("Войти", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    stringResource(Res.string.login_button),
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
+
             Spacer(modifier = Modifier.height(24.dp))
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Нет аккаунта?",
+                    text = stringResource(Res.string.no_account_text),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 TextButton(onClick = onRegisterClick) {
                     Text(
-                        text = "Создать",
+                        text = stringResource(Res.string.create_account_button),
                         style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
                         color = MaterialTheme.colorScheme.primary
                     )

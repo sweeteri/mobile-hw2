@@ -43,6 +43,7 @@ kotlin {
             implementation("io.coil-kt.coil3:coil-compose:3.0.4")
             implementation(libs.coil.network.okhttp)
             implementation(compose.materialIconsExtended)
+            implementation(compose.components.resources)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -79,4 +80,9 @@ android {
 
 dependencies {
     debugImplementation(libs.compose.uiTooling)
+}
+
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.example.mobile_hw2.generated.resources"
 }

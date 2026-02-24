@@ -38,6 +38,14 @@ import androidx.compose.material3.CardDefaults
 
 import coil3.compose.AsyncImage
 
+import org.jetbrains.compose.resources.stringResource
+import com.example.mobile_hw2.generated.resources.Res
+import com.example.mobile_hw2.generated.resources.welcome_title
+import com.example.mobile_hw2.generated.resources.welcome_subtitle
+import com.example.mobile_hw2.generated.resources.welcome_image_description
+import com.example.mobile_hw2.generated.resources.error_loading_image
+import com.example.mobile_hw2.generated.resources.start_button
+
 @Composable
 fun WelcomeScreen(
     onLoginClick: () -> Unit
@@ -61,7 +69,7 @@ fun WelcomeScreen(
                 .height(56.dp),
             shape = MaterialTheme.shapes.medium,
         ) {
-            Text("Начать работу", fontSize = 18.sp)
+            Text(stringResource(Res.string.start_button), fontSize = 18.sp)
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -74,13 +82,13 @@ private fun HeaderSection() {
         modifier = Modifier.padding(top = 64.dp)
     ) {
         Text(
-            text = "Добро пожаловать!",
+            text = stringResource(Res.string.welcome_title),
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )
         Text(
-            text = "Мы скучали по вам!",
+            text = stringResource(Res.string.welcome_subtitle),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -102,7 +110,7 @@ private fun ImageSection(imageUrl: String) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             AsyncImage(
                 model = imageUrl,
-                contentDescription = "Welcome Image",
+                contentDescription = stringResource(Res.string.welcome_image_description),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxSize()
@@ -116,7 +124,7 @@ private fun ImageSection(imageUrl: String) {
             if (isError) {
                 Icon(
                     imageVector = Icons.Default.ImageNotSupported,
-                    contentDescription = "Ошибка загрузки",
+                    contentDescription = stringResource(Res.string.error_loading_image),
                     modifier = Modifier.size(48.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
