@@ -51,7 +51,7 @@ fun LoginScreen(
         email = viewModel.email,
         password = viewModel.password,
         isPasswordVisible = viewModel.isPasswordVisible,
-        onEmailChange = viewModel::onEmailChange,
+        onEmailChange = { viewModel.onEmailChange(it) },
         onPasswordChange = viewModel::onPasswordChange,
         onTogglePasswordVisibility = viewModel::togglePasswordVisibility,
         onLoginClick = viewModel::login,
