@@ -4,8 +4,11 @@ import com.example.mobile_hw2.navigation.Screen
 import com.example.mobile_hw2.screens.welcome.WelcomeScreen
 import com.example.mobile_hw2.screens.login.LoginScreen
 
-import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.fadeIn
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
