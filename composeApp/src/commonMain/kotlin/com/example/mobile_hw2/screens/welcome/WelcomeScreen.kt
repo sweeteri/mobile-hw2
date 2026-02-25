@@ -16,10 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ImageNotSupported
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,11 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.sp
-
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 
@@ -43,7 +38,6 @@ import com.example.mobile_hw2.generated.resources.Res
 import com.example.mobile_hw2.generated.resources.welcome_title
 import com.example.mobile_hw2.generated.resources.welcome_subtitle
 import com.example.mobile_hw2.generated.resources.welcome_image_description
-import com.example.mobile_hw2.generated.resources.error_loading_image
 import com.example.mobile_hw2.generated.resources.start_button
 
 @Composable
@@ -97,8 +91,6 @@ private fun HeaderSection() {
 
 @Composable
 private fun ImageSection(imageUrl: String) {
-    var isError by remember { mutableStateOf(false) }
-
     Card(
         modifier = Modifier.size(240.dp),
         shape = CircleShape,
@@ -116,19 +108,8 @@ private fun ImageSection(imageUrl: String) {
                     .fillMaxSize()
                     .padding(8.dp)
                     .clip(CircleShape),
-                onState = { state ->
-                    isError = state is coil3.compose.AsyncImagePainter.State.Error
-                }
+                error = rememberVectorPainter(Icons.Default.ImageNotSupported),
             )
-
-            if (isError) {
-                Icon(
-                    imageVector = Icons.Default.ImageNotSupported,
-                    contentDescription = stringResource(Res.string.error_loading_image),
-                    modifier = Modifier.size(48.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
         }
     }
 }
