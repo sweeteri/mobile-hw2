@@ -54,6 +54,8 @@ import com.example.mobile_hw2.generated.resources.login_screen_title
 import com.example.mobile_hw2.generated.resources.no_account_text
 import com.example.mobile_hw2.generated.resources.password_label
 import com.example.mobile_hw2.generated.resources.password_placeholder
+import com.example.mobile_hw2.generated.resources.hide_password
+import com.example.mobile_hw2.generated.resources.show_password
 
 @Composable
 fun LoginScreen(
@@ -142,11 +144,10 @@ private fun LoginContent(
                 label = { Text(stringResource(Res.string.password_label)) },
                 leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
                 trailingIcon = {
-                    IconButton(onClick = onTogglePasswordVisibility) {
-                        val icon =
-                            if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
-                        Icon(icon, null)
-                    }
+                    PasswordVisibilityIcon(
+                        isVisible = isPasswordVisible,
+                        onToggle = onTogglePasswordVisibility
+                    )
                 },
                 placeholder = { Text(stringResource(Res.string.password_placeholder)) },
                 modifier = Modifier.fillMaxWidth(),
@@ -204,3 +205,22 @@ private fun LoginContent(
         }
     }
 }
+
+@Composable
+private fun PasswordVisibilityIcon(
+    isVisible: Boolean,
+    onToggle: () -> Unit
+) {
+    IconButton(onClick = onToggle) {
+        val (icon, description) = if (isVisible) {
+            Icons.Default.Visibility to stringResource(Res.string.hide_password)
+        } else {
+            Icons.Default.VisibilityOff to stringResource(Res.string.show_password)
+        }
+        Icon(
+            imageVector = icon,
+            contentDescription = description
+        )
+    }
+}
+
