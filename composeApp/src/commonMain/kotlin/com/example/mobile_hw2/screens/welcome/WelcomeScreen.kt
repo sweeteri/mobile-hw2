@@ -54,7 +54,7 @@ fun WelcomeScreen(
     ) {
         HeaderSection()
 
-        ImageSection(imageUrl = "https://http.cat/200.jpg")
+        ImageSection(imageUrl = "https://images.dog.ceo/breeds/retriever-golden/n02099601_100.jpg")
 
         Button(
             onClick = onLoginClick,
