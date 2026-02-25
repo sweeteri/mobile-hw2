@@ -8,8 +8,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-
+import androidx.compose.foundation.rememberScrollState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.foundation.verticalScroll
 
 import androidx.compose.runtime.Composable
 
@@ -101,14 +102,17 @@ private fun LoginContent(
             )
         }
     ) { innerPadding ->
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .verticalScroll(scrollState)
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
+            Spacer(modifier = Modifier.height(32.dp))
             Text(
                 text = stringResource(Res.string.login_screen_title),
                 style = MaterialTheme.typography.headlineLarge,
@@ -196,6 +200,7 @@ private fun LoginContent(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
