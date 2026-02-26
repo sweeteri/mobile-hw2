@@ -29,6 +29,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.coil.network.okhttp)
+
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -39,6 +41,9 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha07")
+            implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+            implementation(compose.materialIconsExtended)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -77,3 +82,7 @@ dependencies {
     debugImplementation(libs.compose.uiTooling)
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.example.mobile_hw2.generated.resources"
+}

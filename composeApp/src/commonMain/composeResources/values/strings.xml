@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation -->
+    <string name="back_button_description">Назад</string>
+
+    <!-- Login Screen -->
+    <string name="login_screen_title">Вход в систему</string>
+    <string name="login_label">Логин</string>
+    <string name="login_placeholder">Введите ваш email</string>
+    <string name="password_label">Пароль</string>
+    <string name="password_placeholder">Введите пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="login_button">Войти</string>
+    <string name="no_account_text">Нет аккаунта?</string>
+    <string name="create_account_button">Создать</string>
+
+    <!-- Welcome Screen -->
+    <string name="welcome_title">Добро пожаловать!</string>
+    <string name="welcome_subtitle">Мы скучали по вам!</string>
+    <string name="welcome_image_description">Приветственное изображение</string>
+    <string name="error_loading_image">Ошибка загрузки</string>
+    <string name="start_button">Начать работу</string>
+
+    <!-- Password visibility -->
+    <string name="show_password">Показать пароль</string>
+    <string name="hide_password">Скрыть пароль</string>
+</resources>
