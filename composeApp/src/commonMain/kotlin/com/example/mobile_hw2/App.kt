@@ -62,10 +62,16 @@ fun App() {
                 }
             ) {
                 composable(Screen.Welcome.route) {
-                    WelcomeScreen(onLoginClick = {
-                        navController.navigate(Screen.Login.route)
-                    })
+                    WelcomeScreen(
+                        onLoginClick = {
+                            navController.navigate(Screen.Login.route)
+                        },
+                        onSignUpClick = {
+                            /* TODO */
+                        }
+                    )
                 }
+
                 composable(Screen.Login.route) {
                     LoginScreen(
                         onBackClick = {

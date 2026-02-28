@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Navigation -->
-    <string name="back_button_description">Назад</string>
+    <!-- Welcome / Auth -->
+    <string name="login_title">Log in to Reddit</string>
+    <string name="continue_phone">Continue with phone number</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="continue_email">Use email or username</string>
+    <string name="legal_text_prefix">By continuing, you agree to our</string>
+    <string name="user_agreement">User Agreement</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="email_opt_in">I agree to receive emails about cool stuff on Reddit.</string>
+    <string name="no_account">Don’t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="legal_prefix">By continuing, you agree to our</string>
+    <string name="legal_middle">and acknowledge that you understand the</string>
+
 
     <!-- Login Screen -->
     <string name="login_screen_title">Вход в систему</string>
@@ -13,15 +25,7 @@
     <string name="login_button">Войти</string>
     <string name="no_account_text">Нет аккаунта?</string>
     <string name="create_account_button">Создать</string>
-
-    <!-- Welcome Screen -->
-    <string name="welcome_title">Добро пожаловать!</string>
-    <string name="welcome_subtitle">Мы скучали по вам!</string>
-    <string name="welcome_image_description">Приветственное изображение</string>
-    <string name="error_loading_image">Ошибка загрузки</string>
-    <string name="start_button">Начать работу</string>
-
-    <!-- Password visibility -->
+    <string name="back_button_description">Назад</string>
     <string name="show_password">Показать пароль</string>
     <string name="hide_password">Скрыть пароль</string>
 </resources>

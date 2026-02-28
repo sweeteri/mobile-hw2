@@ -17,7 +17,7 @@ androidx-navigation = "2.8.5"
 coil = "3.0.4"
 material3Version = "1.4.0"
 animation = "1.10.3"
-foundationLayout = "1.10.3"
+foundationLayout = "1.5.0"
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
