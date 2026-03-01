@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ fun WelcomeScreen(
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit
 ) {
+    println("WelcomeScreen recomposed")
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,6 +30,8 @@ fun WelcomeScreen(
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val loginClick = remember(onLoginClick) { onLoginClick }
+        val signUpClick = remember(onSignUpClick) { onSignUpClick }
 
         Spacer(Modifier.height(64.dp))
 
@@ -36,7 +40,7 @@ fun WelcomeScreen(
         Spacer(Modifier.height(32.dp))
 
         AuthButtons(
-            onLoginClick = onLoginClick
+            onLoginClick = loginClick
         )
 
         Spacer(Modifier.weight(1f))
@@ -49,7 +53,7 @@ fun WelcomeScreen(
         )
 
         SignUpRow(
-            onSignUpClick = onSignUpClick
+            onSignUpClick = signUpClick
         )
 
         Spacer(Modifier.height(24.dp))

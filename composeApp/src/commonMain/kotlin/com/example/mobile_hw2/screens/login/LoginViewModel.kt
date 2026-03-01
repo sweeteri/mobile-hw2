@@ -1,28 +1,43 @@
 package com.example.mobile_hw2.screens.login
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import LoginUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class LoginViewModel : ViewModel() {
-    var email by mutableStateOf("")
-    var password by mutableStateOf("")
-    var isPasswordVisible by mutableStateOf(false)
+    private val _state = MutableStateFlow(LoginUiState())
+    val state: StateFlow<LoginUiState> = _state
 
-    fun onEmailChange(newValue: String) {
-        email = newValue
+    fun onEmailChange(value: String) {
+        _state.update {
+            it.copy(
+                email = value,
+                isLoginButtonEnabled =
+                    value.isNotBlank() && it.password.isNotBlank()
+            )
+        }
     }
 
-    fun onPasswordChange(newValue: String) {
-        password = newValue
+    fun onPasswordChange(value: String) {
+        _state.update {
+            it.copy(
+                password = value,
+                isLoginButtonEnabled =
+                    it.email.isNotBlank() && value.isNotBlank()
+            )
+        }
     }
 
     fun togglePasswordVisibility() {
-        isPasswordVisible = !isPasswordVisible
+        _state.update {
+            it.copy(isPasswordVisible = !it.isPasswordVisible)
+        }
     }
 
     fun login() {
-        println("Logging in with $email")
+        val current = _state.value
+        println("Logging in with ${current.email} / ${current.password}")
     }
 }

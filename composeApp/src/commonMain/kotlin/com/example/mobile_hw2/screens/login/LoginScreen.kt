@@ -56,6 +56,8 @@ import com.example.mobile_hw2.generated.resources.password_label
 import com.example.mobile_hw2.generated.resources.password_placeholder
 import com.example.mobile_hw2.generated.resources.hide_password
 import com.example.mobile_hw2.generated.resources.show_password
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.getValue
 
 @Composable
 fun LoginScreen(
@@ -63,10 +65,11 @@ fun LoginScreen(
     onRegisterClick: () -> Unit = {},
     onBackClick: () -> Unit
 ) {
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
     LoginContent(
-        email = viewModel.email,
-        password = viewModel.password,
-        isPasswordVisible = viewModel.isPasswordVisible,
+        email = uiState.email,
+        password = uiState.password,
+        isPasswordVisible = uiState.isPasswordVisible,
         onEmailChange = { viewModel.onEmailChange(it) },
         onPasswordChange = { viewModel.onPasswordChange(it) },
         onTogglePasswordVisibility = { viewModel.togglePasswordVisibility() },
