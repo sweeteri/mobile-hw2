@@ -9,8 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.activity.compose.BackHandler
 import androidx.compose.material3.ExperimentalMaterial3Api
+
+@Composable
+expect fun BackHandlerWithExit()
 
 @OptIn(
     ExperimentalMaterial3Api::class
@@ -21,8 +23,7 @@ fun MainScreen(
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
-    BackHandler {
-    }
+    BackHandlerWithExit()
 
     Scaffold(
         topBar = {
