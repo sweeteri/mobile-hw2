@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.verticalScroll
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 
 import androidx.compose.ui.Modifier
@@ -63,9 +64,20 @@ import androidx.compose.runtime.getValue
 fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     onRegisterClick: () -> Unit = {},
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onLoginSuccess: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                LoginUiEvent.LoginSuccess -> {
+                    onLoginSuccess()
+                }
+            }
+        }
+    }
+
     LoginContent(
         email = uiState.email,
         password = uiState.password,
