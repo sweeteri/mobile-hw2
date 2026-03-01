@@ -3,6 +3,7 @@ package com.example.mobile_hw2
 import com.example.mobile_hw2.navigation.Screen
 import com.example.mobile_hw2.screens.welcome.WelcomeScreen
 import com.example.mobile_hw2.screens.login.LoginScreen
+import com.example.mobile_hw2.screens.main.MainScreen
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
@@ -76,8 +77,18 @@ fun App() {
                     LoginScreen(
                         onBackClick = {
                             navController.popBackStack()
+                        },
+                        onLoginSuccess = {
+                            navController.navigate(Screen.Main.route) {
+                                popUpTo(Screen.Login.route) {
+                                    inclusive = true
+                                }
+                            }
                         }
                     )
+                }
+                composable(Screen.Main.route) {
+                    MainScreen()
                 }
             }
         }
