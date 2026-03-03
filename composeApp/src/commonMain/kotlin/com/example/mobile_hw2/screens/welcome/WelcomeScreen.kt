@@ -2,31 +2,31 @@ package com.example.mobile_hw2.screens.welcome
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.HorizontalDivider
 
 @Composable
 fun WelcomeScreen(
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit
 ) {
-    println("WelcomeScreen recomposed")
+    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
+            .verticalScroll(scrollState)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -42,7 +42,6 @@ fun WelcomeScreen(
         AuthButtons(
             onLoginClick = loginClick
         )
-
         Spacer(Modifier.weight(1f))
 
         LegalSection()

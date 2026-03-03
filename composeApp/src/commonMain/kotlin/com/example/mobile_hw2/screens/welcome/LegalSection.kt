@@ -1,39 +1,37 @@
 package com.example.mobile_hw2.screens.welcome
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.ClickableText
-
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.*
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.Alignment
-
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
 import com.example.mobile_hw2.generated.resources.Res
-import org.jetbrains.compose.resources.stringResource
-
 import com.example.mobile_hw2.generated.resources.email_opt_in
-import com.example.mobile_hw2.generated.resources.legal_prefix
-import com.example.mobile_hw2.generated.resources.user_agreement
 import com.example.mobile_hw2.generated.resources.legal_middle
+import com.example.mobile_hw2.generated.resources.legal_prefix
 import com.example.mobile_hw2.generated.resources.privacy_policy
+import com.example.mobile_hw2.generated.resources.user_agreement
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LegalSection() {

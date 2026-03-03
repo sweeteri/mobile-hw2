@@ -1,32 +1,27 @@
 package com.example.mobile_hw2
 
-import com.example.mobile_hw2.navigation.Screen
-import com.example.mobile_hw2.screens.welcome.WelcomeScreen
-import com.example.mobile_hw2.screens.login.LoginScreen
-import com.example.mobile_hw2.screens.main.MainScreen
-
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.fadeIn
-
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
-
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-
 import androidx.compose.runtime.Composable
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mobile_hw2.navigation.Screen
+import com.example.mobile_hw2.screens.login.LoginScreen
+import com.example.mobile_hw2.screens.main.MainScreen
+import com.example.mobile_hw2.screens.welcome.WelcomeScreen
+import com.example.mobile_hw2.ui.theme.RedditTheme
 
 
 @Composable
@@ -34,7 +29,7 @@ import androidx.navigation.compose.rememberNavController
 fun App() {
     val colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
 
-    MaterialTheme(colorScheme = colorScheme) {
+    RedditTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background

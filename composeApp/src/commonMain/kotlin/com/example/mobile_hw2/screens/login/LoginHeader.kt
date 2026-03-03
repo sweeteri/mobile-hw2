@@ -1,7 +1,6 @@
 package com.example.mobile_hw2.screens.login
 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,11 +15,11 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun LoginHeader() {
     Spacer(Modifier.height(32.dp))
+
     Text(
         text = stringResource(Res.string.login_screen_title),
         style = MaterialTheme.typography.headlineLarge,
         fontWeight = FontWeight.ExtraBold,
-        modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(32.dp))
 }
