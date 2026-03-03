@@ -31,7 +31,7 @@ fun LoginHelpLinks() {
         TextButton(onClick = {}) {
             Text(
                 stringResource(Res.string.email_link),
-                color = RedditTheme.colors.accentOrange,  // Рыжий цвет из темы
+                color = RedditTheme.colors.accentOrange,
                 style = MaterialTheme.typography.bodyMedium
             )
         }

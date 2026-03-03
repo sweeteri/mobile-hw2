@@ -11,13 +11,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun WelcomeScreen(
+    viewModel: WelcomeViewModel = viewModel(),
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit
 ) {
@@ -32,7 +36,7 @@ fun WelcomeScreen(
     ) {
         val loginClick = remember(onLoginClick) { onLoginClick }
         val signUpClick = remember(onSignUpClick) { onSignUpClick }
-
+        val uiState by viewModel.state.collectAsStateWithLifecycle()
         Spacer(Modifier.height(64.dp))
 
         WelcomeHeader()
@@ -44,7 +48,10 @@ fun WelcomeScreen(
         )
         Spacer(Modifier.weight(1f))
 
-        LegalSection()
+        LegalSection(
+            checked = uiState.isEmailOptInChecked,
+            onCheckedChange = viewModel::onEmailOptInChanged
+        )
 
         HorizontalDivider(
             modifier = Modifier.padding(vertical = 24.dp),

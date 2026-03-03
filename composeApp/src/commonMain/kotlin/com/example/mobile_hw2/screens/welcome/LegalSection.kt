@@ -12,10 +12,6 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -34,7 +30,10 @@ import com.example.mobile_hw2.generated.resources.user_agreement
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun LegalSection() {
+fun LegalSection(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
     Column(
         modifier = Modifier.widthIn(max = 420.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -44,13 +43,18 @@ fun LegalSection() {
             onPrivacyPolicyClick = {}
         )
         Spacer(Modifier.height(12.dp))
-        EmailOptInCheckbox()
+        EmailOptInCheckbox(
+            checked = checked,
+            onCheckedChange = onCheckedChange
+        )
     }
 }
 
 @Composable
-private fun EmailOptInCheckbox() {
-    var checked by remember { mutableStateOf(false) }
+private fun EmailOptInCheckbox(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -58,7 +62,7 @@ private fun EmailOptInCheckbox() {
     ) {
         Checkbox(
             checked = checked,
-            onCheckedChange = { checked = it }
+            onCheckedChange = onCheckedChange
         )
         Text(
             text = stringResource(Res.string.email_opt_in),
