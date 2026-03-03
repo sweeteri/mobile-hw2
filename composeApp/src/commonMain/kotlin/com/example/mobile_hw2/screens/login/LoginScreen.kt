@@ -34,6 +34,7 @@ fun LoginScreen(
         password = uiState.password,
         isPasswordVisible = uiState.isPasswordVisible,
         isLoginButtonEnabled = uiState.isLoginButtonActive,
+        error = uiState.error,
         onEmailChange = onEmailChange,
         onPasswordChange = onPasswordChange,
         onTogglePasswordVisibility = onTogglePasswordVisibility,

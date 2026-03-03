@@ -40,17 +40,22 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    private val repository = LoginRepository()
     fun login() {
         val current = _state.value
 
-        if (current.username == "test@test.com" && current.password == "1234") {
-            viewModelScope.launch {
-                _events.emit(LoginUiEvent.LoginSuccess)
-            }
-        } else {
-            _state.update {
-                it.copy(error = "Неверный логин или пароль")
-            }
+        viewModelScope.launch {
+            val result = repository.login(current.username, current.password)
+
+            result.fold(
+                onSuccess = {
+                    _events.emit(LoginUiEvent.LoginSuccess)
+                    _state.update { it.copy(error = null) }
+                },
+                onFailure = { ex ->
+                    _state.update { it.copy(error = ex.message ?: "Неверный логин или пароль") }
+                }
+            )
         }
     }
 }
