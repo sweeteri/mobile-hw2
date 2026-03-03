@@ -24,16 +24,16 @@ fun LoginScreen(
             }
         }
     }
-    val onEmailChange = remember { { value: String -> viewModel.onEmailChange(value) } }
-    val onPasswordChange = remember { { value: String -> viewModel.onPasswordChange(value) } }
+    val onEmailChange = remember { { value: String -> viewModel.onUsernameChanged(value) } }
+    val onPasswordChange = remember { { value: String -> viewModel.onPasswordChanged(value) } }
     val onTogglePasswordVisibility = remember { { viewModel.togglePasswordVisibility() } }
     val onLoginClick = remember { { viewModel.login() } }
 
     LoginContent(
-        email = uiState.email,
+        email = uiState.username,
         password = uiState.password,
         isPasswordVisible = uiState.isPasswordVisible,
-        isLoginButtonEnabled = uiState.isLoginButtonEnabled,
+        isLoginButtonEnabled = uiState.isLoginButtonActive,
         onEmailChange = onEmailChange,
         onPasswordChange = onPasswordChange,
         onTogglePasswordVisibility = onTogglePasswordVisibility,

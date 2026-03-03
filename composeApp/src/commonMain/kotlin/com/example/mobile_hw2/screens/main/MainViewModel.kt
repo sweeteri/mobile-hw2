@@ -3,15 +3,25 @@ package com.example.mobile_hw2.screens.main
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class MainViewModel : ViewModel() {
 
-    private val _state = MutableStateFlow(
-        MainUiState(
-            items = mockItems()
-        )
-    )
+    private val _state = MutableStateFlow(MainUiState())
     val state: StateFlow<MainUiState> = _state
+
+    init {
+        loadItems()
+    }
+
+    private fun loadItems() {
+        _state.update {
+            it.copy(
+                items = mockItems(),
+                isLoading = false
+            )
+        }
+    }
 
     private fun mockItems(): List<MainItem> {
         return listOf(

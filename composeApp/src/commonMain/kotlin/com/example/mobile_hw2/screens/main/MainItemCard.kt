@@ -18,7 +18,9 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 
 @Composable
-fun MainItemCard(item: MainItem) {
+fun MainItemCard(
+    item: MainItem
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -30,17 +32,17 @@ fun MainItemCard(item: MainItem) {
             AsyncImage(
                 model = item.imageUrl,
                 contentDescription = null,
-                modifier = Modifier
-                    .size(64.dp)
+                modifier = Modifier.size(64.dp)
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(Modifier.width(16.dp))
 
             Column {
                 Text(
                     text = item.title,
                     style = MaterialTheme.typography.titleMedium
                 )
+
                 Text(
                     text = item.subtitle,
                     style = MaterialTheme.typography.bodyMedium,

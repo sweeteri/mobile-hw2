@@ -20,9 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 expect fun BackHandlerWithExit()
 
-@OptIn(
-    ExperimentalMaterial3Api::class
-)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = viewModel()
@@ -38,18 +36,23 @@ fun MainScreen(
             )
         }
     ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(
-                items = uiState.items,
-                key = { it.id }
-            ) { item ->
-                MainItemCard(item)
+
+        if (uiState.isLoading) {
+            /* TODO Loading UI */
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(
+                    items = uiState.items,
+                    key = { it.id }
+                ) { item ->
+                    MainItemCard(item = item)
+                }
             }
         }
     }

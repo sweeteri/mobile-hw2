@@ -14,22 +14,22 @@ class LoginViewModel : ViewModel() {
     val state: StateFlow<LoginUiState> = _state
     private val _events = MutableSharedFlow<LoginUiEvent>()
     val events: SharedFlow<LoginUiEvent> = _events
-    fun onEmailChange(value: String) {
+    fun onUsernameChanged(value: String) {
         _state.update {
             it.copy(
-                email = value,
-                isLoginButtonEnabled =
+                username = value,
+                isLoginButtonActive =
                     value.isNotBlank() && it.password.isNotBlank()
             )
         }
     }
 
-    fun onPasswordChange(value: String) {
+    fun onPasswordChanged(value: String) {
         _state.update {
             it.copy(
                 password = value,
-                isLoginButtonEnabled =
-                    it.email.isNotBlank() && value.isNotBlank()
+                isLoginButtonActive =
+                    it.username.isNotBlank() && value.isNotBlank()
             )
         }
     }
@@ -43,7 +43,7 @@ class LoginViewModel : ViewModel() {
     fun login() {
         val current = _state.value
 
-        if (current.email == "test@test.com" && current.password == "1234") {
+        if (current.username == "test@test.com" && current.password == "1234") {
             viewModelScope.launch {
                 _events.emit(LoginUiEvent.LoginSuccess)
             }
