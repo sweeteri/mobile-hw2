@@ -21,7 +21,7 @@ import com.example.mobile_hw2.navigation.Screen
 import com.example.mobile_hw2.screens.login.LoginScreen
 import com.example.mobile_hw2.screens.main.MainScreen
 import com.example.mobile_hw2.screens.welcome.WelcomeScreen
-import com.example.mobile_hw2.ui.theme.RedditTheme
+import com.example.mobile_hw2.ui.theme.StepikTheme
 
 
 @Composable
@@ -29,7 +29,7 @@ import com.example.mobile_hw2.ui.theme.RedditTheme
 fun App() {
     val colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
 
-    RedditTheme {
+    StepikTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
@@ -72,6 +72,11 @@ fun App() {
                     LoginScreen(
                         onBackClick = {
                             navController.popBackStack()
+                        },
+                        onRegisterClick = {
+                            navController.navigate(Screen.Welcome.route) {
+                                popUpTo(Screen.Login.route) { inclusive = true }
+                            }
                         },
                         onLoginSuccess = {
                             navController.navigate(Screen.Main.route) {

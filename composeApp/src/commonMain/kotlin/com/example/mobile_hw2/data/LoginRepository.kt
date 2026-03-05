@@ -1,5 +1,4 @@
-package com.example.mobile_hw2.screens.login
-
+package com.example.mobile_hw2.data
 
 class LoginRepository {
 

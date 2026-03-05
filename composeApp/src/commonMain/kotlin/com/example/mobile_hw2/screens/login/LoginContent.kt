@@ -3,7 +3,6 @@ package com.example.mobile_hw2.screens.login
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -11,11 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,7 +19,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun LoginContent(
-    email: String,
+    username: String,
     password: String,
     isPasswordVisible: Boolean,
     isLoginButtonEnabled: Boolean,
@@ -35,45 +31,40 @@ fun LoginContent(
     onRegisterClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding()
-            .padding(horizontal = 24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(horizontal = 24.dp)
     ) {
+
+        Spacer(Modifier.height(16.dp))
+
+        LoginTopBar(
+            onBackClick = onBackClick,
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState()),
+            modifier = Modifier.verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(Modifier.height(16.dp))
-
-            LoginTopBar(
-                onBackClick = onBackClick,
-                onSignUpClick = onRegisterClick,
-                modifier = Modifier.fillMaxWidth()
-            )
 
             LoginHeader()
 
-            Spacer(Modifier.height(16.dp))
-
-            GoogleLoginButton()
-
-            LoginDivider()
+            Spacer(modifier = Modifier.height(24.dp))
 
             LoginForm(
-                email = email,
+                username = username,
                 password = password,
                 isPasswordVisible = isPasswordVisible,
-                onEmailChange = onEmailChange,
+                onUsernameChange = onEmailChange,
                 onPasswordChange = onPasswordChange,
                 onTogglePasswordVisibility = onTogglePasswordVisibility
             )
+
             if (!error.isNullOrEmpty()) {
                 Spacer(Modifier.height(8.dp))
                 Text(
@@ -85,15 +76,21 @@ fun LoginContent(
 
             Spacer(Modifier.height(16.dp))
 
-            LoginHelpLinks()
+            LoginButton(
+                enabled = isLoginButtonEnabled,
+                onClick = onLoginClick
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            RemindPasswordButton()
         }
 
-        LoginBottomButton(
-            enabled = isLoginButtonEnabled,
-            onClick = onLoginClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 12.dp)
+        Spacer(modifier = Modifier.weight(1f))
+
+        SignUpSection(
+            onLoginClick = onRegisterClick,
+            onSignUpClick = onRegisterClick
         )
     }
 }

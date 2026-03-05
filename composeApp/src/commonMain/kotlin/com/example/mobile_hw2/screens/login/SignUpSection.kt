@@ -1,4 +1,5 @@
-package com.example.mobile_hw2.screens.welcome
+package com.example.mobile_hw2.screens.login
+
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,12 +10,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.sign_in_email
+import com.example.mobile_hw2.generated.resources.sign_in_general
 import com.example.mobile_hw2.generated.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun SignUpRow(
+fun SignUpSection(
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit
 ) {
@@ -28,7 +29,7 @@ fun SignUpRow(
             onClick = onLoginClick
         ) {
             Text(
-                text = stringResource(Res.string.sign_in_email),
+                text = stringResource(Res.string.sign_in_general),
                 color = MaterialTheme.colorScheme.onBackground
             )
         }

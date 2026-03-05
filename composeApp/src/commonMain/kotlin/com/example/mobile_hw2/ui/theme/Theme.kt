@@ -13,35 +13,39 @@ import com.example.mobile_hw2.theme.AppTypography
 data class ExtendedColorScheme(
     val textFieldBackground: Color,
     val textSecondary: Color,
-    val accentOrange: Color
+    val accent: Color
 )
 
 val LocalExtendedColors = compositionLocalOf {
     ExtendedColorScheme(
         textFieldBackground = Color.Unspecified,
         textSecondary = Color.Unspecified,
-        accentOrange = Color.Unspecified
+        accent = Color.Unspecified
     )
 }
 
 private val LightColors = lightColorScheme(
-    primary = RedditOrange,
+    primary = Color.White,
     background = LightBackground,
     surface = LightSurface,
+
+    onPrimary = Color.Black,
     onBackground = Color.Black,
     onSurface = Color.Black
 )
 
 private val DarkColors = darkColorScheme(
-    primary = RedditOrange,
+    primary = Color.White,
     background = DarkBackground,
     surface = DarkSurface,
+
+    onPrimary = Color.Black,
     onBackground = Color.White,
     onSurface = Color.White
 )
 
 @Composable
-fun RedditTheme(
+fun StepikTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -51,13 +55,13 @@ fun RedditTheme(
         ExtendedColorScheme(
             textFieldBackground = DarkTextFieldBackground,
             textSecondary = DarkTextSecondary,
-            accentOrange = AccentOrange
+            accent = StepikGreen
         )
     } else {
         ExtendedColorScheme(
             textFieldBackground = LightTextFieldBackground,
             textSecondary = LightTextSecondary,
-            accentOrange = AccentOrange
+            accent = StepikGreen
         )
     }
 
@@ -72,7 +76,7 @@ fun RedditTheme(
     }
 }
 
-object RedditTheme {
+object StepikTheme {
     val colors: ExtendedColorScheme
         @Composable
         get() = LocalExtendedColors.current

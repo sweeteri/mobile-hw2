@@ -30,7 +30,7 @@ fun LoginScreen(
     val onLoginClick = remember { { viewModel.login() } }
 
     LoginContent(
-        email = uiState.username,
+        username = uiState.username,
         password = uiState.password,
         isPasswordVisible = uiState.isPasswordVisible,
         isLoginButtonEnabled = uiState.isLoginButtonActive,

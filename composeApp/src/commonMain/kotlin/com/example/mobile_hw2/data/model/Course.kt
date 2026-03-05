@@ -1,11 +1,11 @@
-package com.example.mobile_hw2.screens.main
+package com.example.mobile_hw2.data.model
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class MainItem(
+data class Course(
     val id: String,
     val title: String,
-    val subtitle: String,
+    val author: String,
     val imageUrl: String
 )

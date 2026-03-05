@@ -1,6 +1,7 @@
 package com.example.mobile_hw2.screens.main
 
+import com.example.mobile_hw2.data.model.Course
+
 data class MainUiState(
-    val items: List<MainItem> = emptyList(),
-    val isLoading: Boolean = false
+    val courses: List<Course> = emptyList(),
 )
