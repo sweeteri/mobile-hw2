@@ -6,6 +6,7 @@
     <string name="sign_in_email">Вход по e-mail</string>
     <string name="less">Меньше</string>
     <string name="more">Больше</string>
+    <string name="stepik">Степик</string>
 
     <!-- Login Screen -->
     <string name="login_screen_title">Войти</string>
@@ -16,4 +17,7 @@
     <string name="remind_password">Напомнить пароль</string>
     <string name="show_password">Показать пароль</string>
     <string name="hide_password">Скрыть пароль</string>
+
+    <!-- Home Screen -->
+    <string name="home">Главная</string>
 </resources>

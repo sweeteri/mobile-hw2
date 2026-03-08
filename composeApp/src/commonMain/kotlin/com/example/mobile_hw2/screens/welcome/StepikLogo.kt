@@ -10,7 +10,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.mobile_hw2.generated.resources.Res
 import com.example.mobile_hw2.generated.resources.ic_stepik
+import com.example.mobile_hw2.generated.resources.stepik
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun StepikLogo() {
@@ -21,7 +23,7 @@ fun StepikLogo() {
     ) {
         Image(
             painter = painterResource(Res.drawable.ic_stepik),
-            contentDescription = "Stepik",
+            contentDescription = stringResource(Res.string.stepik),
             modifier = Modifier.size(48.dp)
         )
     }

@@ -17,6 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mobile_hw2.generated.resources.Res
+import com.example.mobile_hw2.generated.resources.home
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 expect fun BackHandlerWithExit()
@@ -42,7 +45,7 @@ fun MainScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Home",
+                    text = stringResource(Res.string.home),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 )
