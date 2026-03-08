@@ -10,14 +10,14 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.example.mobile_hw2.theme.AppTypography
 
-data class ExtendedColorScheme(
+data class StepikColors(
     val textFieldBackground: Color,
     val textSecondary: Color,
     val accent: Color
 )
 
-val LocalExtendedColors = compositionLocalOf {
-    ExtendedColorScheme(
+val LocalStepikColors = compositionLocalOf {
+    StepikColors(
         textFieldBackground = Color.Unspecified,
         textSecondary = Color.Unspecified,
         accent = Color.Unspecified
@@ -51,14 +51,14 @@ fun StepikTheme(
 ) {
     val colorScheme = if (darkTheme) DarkColors else LightColors
 
-    val extendedColors = if (darkTheme) {
-        ExtendedColorScheme(
+    val stepikColors = if (darkTheme) {
+        StepikColors(
             textFieldBackground = DarkTextFieldBackground,
             textSecondary = DarkTextSecondary,
             accent = StepikGreen
         )
     } else {
-        ExtendedColorScheme(
+        StepikColors(
             textFieldBackground = LightTextFieldBackground,
             textSecondary = LightTextSecondary,
             accent = StepikGreen
@@ -66,7 +66,7 @@ fun StepikTheme(
     }
 
     CompositionLocalProvider(
-        LocalExtendedColors provides extendedColors
+        LocalStepikColors provides stepikColors
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
@@ -77,7 +77,7 @@ fun StepikTheme(
 }
 
 object StepikTheme {
-    val colors: ExtendedColorScheme
+    val colors: StepikColors
         @Composable
-        get() = LocalExtendedColors.current
+        get() = LocalStepikColors.current
 }
