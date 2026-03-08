@@ -1,4 +1,4 @@
-package com.example.mobile_hw2.data
+package com.example.mobile_hw2.data.repository
 
 import com.example.mobile_hw2.data.model.Course
 

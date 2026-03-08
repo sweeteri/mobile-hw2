@@ -2,19 +2,21 @@ package com.example.mobile_hw2.screens.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobile_hw2.data.LoginRepository
+import com.example.mobile_hw2.data.repository.LoginRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
     private val _state = MutableStateFlow(LoginUiState())
-    val state: StateFlow<LoginUiState> = _state
+    val state: StateFlow<LoginUiState> = _state.asStateFlow()
     private val _events = MutableSharedFlow<LoginUiEvent>()
-    val events: SharedFlow<LoginUiEvent> = _events
+    val events: SharedFlow<LoginUiEvent> = _events.asSharedFlow()
     fun onUsernameChanged(value: String) {
         _state.update {
             it.copy(
@@ -41,7 +43,6 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    private val repository = LoginRepository()
     fun login() {
         val current = _state.value
 

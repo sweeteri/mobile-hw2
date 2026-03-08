@@ -6,11 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mobile_hw2.data.repository.LoginRepositoryImpl
 
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = viewModel(),
+    viewModel: LoginViewModel = viewModel {
+        LoginViewModel(repository = LoginRepositoryImpl())
+    },
     onRegisterClick: () -> Unit = {},
     onBackClick: () -> Unit,
     onLoginSuccess: () -> Unit
