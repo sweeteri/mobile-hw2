@@ -4,7 +4,7 @@ import com.example.mobile_hw2.data.model.Course
 
 class CoursesRepository {
 
-    fun getCourses(): List<Course> {
+    suspend fun getCourses(): List<Course> {
         return listOf(
             Course(
                 id = "1",
