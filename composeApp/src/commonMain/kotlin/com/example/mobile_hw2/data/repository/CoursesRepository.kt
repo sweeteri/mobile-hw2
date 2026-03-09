@@ -1,29 +1,25 @@
 package com.example.mobile_hw2.data.repository
 
-import com.example.mobile_hw2.data.model.Course
+import com.example.mobile_hw2.data.model.StepikResponse
+import com.example.mobile_hw2.data.remote.NetworkClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 
 class CoursesRepository {
+    private val client = NetworkClient.httpClient
 
-    suspend fun getCourses(): List<Course> {
-        return listOf(
-            Course(
-                id = "1",
-                title = "Kotlin for Beginners",
-                author = "Stepik",
-                imageUrl = "https://stepik.org/static/frontend/stepik_logo.png"
-            ),
-            Course(
-                id = "2",
-                title = "Android Development",
-                author = "Google",
-                imageUrl = "https://stepik.org/static/frontend/stepik_logo.png"
-            ),
-            Course(
-                id = "3",
-                title = "Algorithms",
-                author = "Computer Science",
-                imageUrl = "https://stepik.org/static/frontend/stepik_logo.png"
-            )
-        )
+    suspend fun getCourses(page: Int): Result<StepikResponse> {
+        return try {
+            val response: StepikResponse = client
+                .get("https://stepik.org/api/courses") {
+                    parameter("page", page)
+                    parameter("is_public", "true")
+                    parameter("order", "-activity")
+                }.body()
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }

@@ -7,5 +7,7 @@ data class Course(
     val id: String,
     val title: String,
     val author: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val rating: Double = 0.0,
+    val learnersCount: Int = 0
 )
