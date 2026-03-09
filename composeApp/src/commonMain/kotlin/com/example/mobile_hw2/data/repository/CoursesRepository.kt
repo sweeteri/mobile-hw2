@@ -9,13 +9,17 @@ import io.ktor.client.request.parameter
 class CoursesRepository {
     private val client = NetworkClient.httpClient
 
-    suspend fun getCourses(page: Int): Result<StepikResponse> {
+    suspend fun getCourses(page: Int, query: String = ""): Result<StepikResponse> {
         return try {
             val response: StepikResponse = client
                 .get("https://stepik.org/api/courses") {
                     parameter("page", page)
-                    parameter("is_public", "true")
-                    parameter("order", "-activity")
+                    if (query.isNotEmpty()) {
+                        parameter("search", query)
+                    } else {
+                        parameter("is_public", "true")
+                        parameter("order", "-activity")
+                    }
                 }.body()
             Result.success(response)
         } catch (e: Exception) {
