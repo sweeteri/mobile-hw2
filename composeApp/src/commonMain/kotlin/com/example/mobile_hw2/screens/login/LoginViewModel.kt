@@ -1,28 +1,63 @@
 package com.example.mobile_hw2.screens.login
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mobile_hw2.data.repository.LoginRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
-    var email by mutableStateOf("")
-    var password by mutableStateOf("")
-    var isPasswordVisible by mutableStateOf(false)
-
-    fun onEmailChange(newValue: String) {
-        email = newValue
+class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
+    private val _state = MutableStateFlow(LoginUiState())
+    val state: StateFlow<LoginUiState> = _state.asStateFlow()
+    private val _events = MutableSharedFlow<LoginUiEvent>()
+    val events: SharedFlow<LoginUiEvent> = _events.asSharedFlow()
+    fun onUsernameChanged(value: String) {
+        _state.update {
+            it.copy(
+                username = value,
+                isLoginButtonActive =
+                    value.isNotBlank() && it.password.isNotBlank()
+            )
+        }
     }
 
-    fun onPasswordChange(newValue: String) {
-        password = newValue
+    fun onPasswordChanged(value: String) {
+        _state.update {
+            it.copy(
+                password = value,
+                isLoginButtonActive =
+                    it.username.isNotBlank() && value.isNotBlank()
+            )
+        }
     }
 
     fun togglePasswordVisibility() {
-        isPasswordVisible = !isPasswordVisible
+        _state.update {
+            it.copy(isPasswordVisible = !it.isPasswordVisible)
+        }
     }
 
     fun login() {
-        println("Logging in with $email")
+        val current = _state.value
+
+        viewModelScope.launch {
+            val result = repository.login(current.username, current.password)
+
+            result.fold(
+                onSuccess = {
+                    _events.emit(LoginUiEvent.LoginSuccess)
+                    _state.update { it.copy(error = null) }
+                },
+                onFailure = { ex ->
+                    _state.update { it.copy(error = ex.message ?: "Неверный логин или пароль") }
+                }
+            )
+        }
     }
 }
