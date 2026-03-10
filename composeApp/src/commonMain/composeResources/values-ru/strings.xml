@@ -20,4 +20,10 @@
 
     <!-- Home Screen -->
     <string name="home">Главная</string>
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="change_search">Попробуйте изменить поисковый запрос или фильтры</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="cannot_load_data">Не удалось загрузить данные. Проверьте соединение с интернетом.</string>
+    <string name="error_occured">Произошла ошибка.</string>
+    <string name="search_courses">Поиск курсов...</string>
 </resources>

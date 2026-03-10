@@ -21,4 +21,10 @@
 
     <!-- Home Screen -->
     <string name="home">Home</string>
+    <string name="nothing_found">Nothing found</string>
+    <string name="change_search">Try changing your search query or filters</string>
+    <string name="try_again">Try again</string>
+    <string name="cannot_load_data">Failed to load data. Please check your internet connection.</string>
+    <string name="error_occured">An error occurred.</string>
+    <string name="search_courses">Search courses...</string>
 </resources>
