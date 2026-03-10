@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 
 object NetworkClient {
     private val jsonConfig = Json {
-        prettyPrint = true
+        prettyPrint = false
         isLenient = true
         ignoreUnknownKeys = true
     }
@@ -21,7 +21,7 @@ object NetworkClient {
             json(jsonConfig)
         }
         install(Logging) {
-            level = LogLevel.ALL
+            level = LogLevel.INFO
             logger = object : Logger {
                 override fun log(message: String) {
                     Napier.v(tag = "HTTP_CLIENT", message = message)
@@ -29,7 +29,8 @@ object NetworkClient {
             }
         }
     }
-    fun initLogger(){
+
+    fun initLogger() {
         Napier.base(DebugAntilog())
     }
 }

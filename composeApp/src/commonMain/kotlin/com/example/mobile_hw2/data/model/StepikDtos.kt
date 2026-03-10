@@ -6,7 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class StepikResponse(
     val meta: MetaDto,
-    val courses: List<CourseDto>
+    val courses: List<CourseDto> = emptyList(),
+    @SerialName("course-review-summaries")
+    val summaries: List<ReviewSummaryDto> = emptyList()
 )
 
 @Serializable
@@ -24,5 +26,14 @@ data class CourseDto(
     @SerialName("cover") val cover: String? = null,
     @SerialName("review_summary") val reviewSummaryId: Int? = null,
     @SerialName("learners_count") val learnersCount: Int? = 0,
-    @SerialName("total_units") val totalUnits: Int? = 0
+    @SerialName("total_units") val totalUnits: Int? = 0,
+    var average: Double = 0.0
+)
+
+
+@Serializable
+data class ReviewSummaryDto(
+    val id: Int,
+    val course: Int,
+    val average: Double
 )

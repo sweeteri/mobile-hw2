@@ -27,6 +27,19 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.mobile_hw2.data.model.Course
 
+fun formatLearners(count: Int): String {
+    return when {
+        count >= 1000 -> {
+            val thousands = count / 1000.0
+            val rounded = kotlin.math.round(thousands * 10) / 10.0
+            "${rounded}k"
+        }
+
+        else -> count.toString()
+    }
+}
+
+
 @Composable
 fun CourseCard(course: Course) {
     Card(
@@ -69,11 +82,12 @@ fun CourseCard(course: Course) {
                         Icons.Default.Star,
                         contentDescription = null,
                         modifier = Modifier.size(14.dp),
-                        tint = Color(0xFFFFB400)
+                        tint = if (course.average > 0) Color.Yellow else Color.Gray
                     )
                     Text(
-                        text = " ${course.rating}",
-                        style = MaterialTheme.typography.labelMedium
+                        text = if (course.average > 0) " ${course.average}" else " —",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = if (course.average > 0) Color.Unspecified else Color.Gray
                     )
                     Spacer(Modifier.width(8.dp))
                     Icon(
@@ -82,10 +96,11 @@ fun CourseCard(course: Course) {
                         modifier = Modifier.size(14.dp)
                     )
                     Text(
-                        text = " ${course.learnersCount}",
+                        text = " ${formatLearners(course.learnersCount)}",
                         style = MaterialTheme.typography.labelMedium
                     )
                 }
+
             }
         }
     }
