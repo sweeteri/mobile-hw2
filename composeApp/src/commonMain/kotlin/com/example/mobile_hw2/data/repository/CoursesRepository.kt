@@ -1,51 +1,51 @@
 package com.example.mobile_hw2.data.repository
 
 import com.example.mobile_hw2.data.model.StepikResponse
-import com.example.mobile_hw2.data.remote.NetworkClient
-import io.ktor.client.call.body
-import io.ktor.client.request.get
-import io.ktor.client.request.parameter
+import com.example.mobile_hw2.data.remote.StepikApiClient
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.CancellationException
+import com.example.mobile_hw2.data.model.MetaDto
 
-class CoursesRepository {
-    private val client = NetworkClient.httpClient
+class CoursesRepository(
+    private val apiClient: StepikApiClient = StepikApiClient()
+) {
 
     suspend fun getCourses(page: Int, query: String = ""): Result<StepikResponse> {
         return try {
-            val response: StepikResponse = client.get("https://stepik.org/api/courses") {
-                parameter("page", page)
-                if (query.isNotEmpty()) {
-                    parameter("search", query)
-                } else {
-                    parameter("is_public", "true")
-                    parameter("order", "-activity")
-                }
-            }.body()
-
+            val response = apiClient.getCourses(page, query)
             val courses = response.courses
 
-            if (courses.isEmpty()) return Result.success(response)
+            if (courses.isEmpty()) {
+                return Result.success(response)
+            }
+
 
             val summaryIds = courses.mapNotNull { it.reviewSummaryId }
 
-            if (summaryIds.isEmpty()) return Result.success(response)
+            if (summaryIds.isEmpty()) {
+                val coursesWithZeroRating = courses.map { course ->
+                    course.copy(average = 0.0)
+                }
+                return Result.success(response.copy(courses = coursesWithZeroRating))
+            }
 
-            val reviewsResponse: StepikResponse =
-                client.get("https://stepik.org/api/course-review-summaries") {
-                    summaryIds.forEach { id ->
-                        parameter("ids[]", id)
-                    }
-                }.body()
-
+            val reviewsResponse = apiClient.getCourseReviews(summaryIds)
             val ratingMap = reviewsResponse.summaries.associate { it.id to it.average }
 
             val updatedCourses = courses.map { course ->
-                course.copy(average = ratingMap[course.reviewSummaryId] ?: 0.0)
+                val newRating = if (course.reviewSummaryId != null) {
+                    ratingMap[course.reviewSummaryId] ?: 0.0
+                } else {
+                    0.0
+                }
+                course.copy(average = newRating)
             }
-
             Result.success(response.copy(courses = updatedCourses))
 
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
-            e.printStackTrace()
+            Napier.e("Loading courses error ", e)
             Result.failure(e)
         }
     }
