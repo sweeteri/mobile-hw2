@@ -20,8 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.change_search
-import com.example.mobile_hw2.generated.resources.nothing_found
+import com.example.mobile_hw2.generated.resources.home_search_empty_message
+import com.example.mobile_hw2.generated.resources.home_search_empty_title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -41,14 +41,14 @@ fun EmptyStateView() {
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = stringResource(Res.string.nothing_found),
+            text = stringResource(Res.string.home_search_empty_title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
             color = Color.Gray
         )
 
         Text(
-            text = stringResource(Res.string.change_search),
+            text = stringResource(Res.string.home_search_empty_message),
             fontSize = 14.sp,
             color = Color.LightGray,
             textAlign = TextAlign.Center

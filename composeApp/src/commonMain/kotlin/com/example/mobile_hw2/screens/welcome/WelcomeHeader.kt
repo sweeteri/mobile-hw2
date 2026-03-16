@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.sign_in_general
+import com.example.mobile_hw2.generated.resources.welcome_sign_in_general
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -24,7 +24,7 @@ fun WelcomeHeader() {
         Spacer(Modifier.height(32.dp))
 
         Text(
-            text = stringResource(Res.string.sign_in_general),
+            text = stringResource(Res.string.welcome_sign_in_general),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onBackground
         )

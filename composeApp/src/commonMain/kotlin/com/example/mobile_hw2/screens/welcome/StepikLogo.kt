@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mobile_hw2.generated.resources.Res
 import com.example.mobile_hw2.generated.resources.ic_stepik
-import com.example.mobile_hw2.generated.resources.stepik
+import com.example.mobile_hw2.generated.resources.welcome_stepik
 import com.example.mobile_hw2.ui.theme.StepikTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -23,7 +23,7 @@ fun StepikLogo() {
     ) {
         Image(
             painter = painterResource(Res.drawable.ic_stepik),
-            contentDescription = stringResource(Res.string.stepik),
+            contentDescription = stringResource(Res.string.welcome_stepik),
             modifier = Modifier.size(48.dp)
         )
     }

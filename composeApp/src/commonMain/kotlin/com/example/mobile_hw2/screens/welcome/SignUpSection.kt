@@ -9,8 +9,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.sign_in_email
-import com.example.mobile_hw2.generated.resources.sign_up
+import com.example.mobile_hw2.generated.resources.welcome_sign_in_email
+import com.example.mobile_hw2.generated.resources.welcome_sign_up
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -28,7 +28,7 @@ fun SignUpRow(
             onClick = onLoginClick
         ) {
             Text(
-                text = stringResource(Res.string.sign_in_email),
+                text = stringResource(Res.string.welcome_sign_in_email),
                 color = MaterialTheme.colorScheme.onBackground
             )
         }
@@ -37,7 +37,7 @@ fun SignUpRow(
             onClick = onSignUpClick
         ) {
             Text(
-                text = stringResource(Res.string.sign_up),
+                text = stringResource(Res.string.welcome_sign_up),
                 color = MaterialTheme.colorScheme.onBackground
             )
         }

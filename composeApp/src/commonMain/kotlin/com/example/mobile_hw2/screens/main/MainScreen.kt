@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.home
+import com.example.mobile_hw2.generated.resources.home_title
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.jetbrains.compose.resources.stringResource
 
@@ -41,7 +41,7 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        ScreenHeader(stringResource(Res.string.home))
+        ScreenHeader(stringResource(Res.string.home_title))
 
         SearchField(
             query = state.searchQuery,

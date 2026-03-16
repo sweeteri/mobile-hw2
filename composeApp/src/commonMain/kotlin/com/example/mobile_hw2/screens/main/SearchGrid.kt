@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.search_courses
+import com.example.mobile_hw2.generated.resources.home_search_hint
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -20,8 +20,9 @@ fun SearchField(query: String, onQueryChange: (String) -> Unit) {
     OutlinedTextField(
         value = query,
         onValueChange = onQueryChange,
-        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp),
-        placeholder = { Text(stringResource(Res.string.search_courses)) },
+        modifier = Modifier.fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp),
+        placeholder = { Text(stringResource(Res.string.home_search_hint)) },
         leadingIcon = { Icon(Icons.Default.Search, null) },
         singleLine = true,
         shape = RoundedCornerShape(12.dp)

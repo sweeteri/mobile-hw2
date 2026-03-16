@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.sign_in_email
+import com.example.mobile_hw2.generated.resources.welcome_sign_in_email
 import com.example.mobile_hw2.screens.welcome.StepikLogo
 import com.example.mobile_hw2.ui.theme.StepikTheme
 import org.jetbrains.compose.resources.stringResource
@@ -23,7 +23,7 @@ fun LoginHeader() {
         StepikLogo()
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = stringResource(Res.string.sign_in_email),
+            text = stringResource(Res.string.welcome_sign_in_email),
             color = StepikTheme.colors.textSecondary,
             fontSize = 22.sp,
             fontWeight = FontWeight.SemiBold

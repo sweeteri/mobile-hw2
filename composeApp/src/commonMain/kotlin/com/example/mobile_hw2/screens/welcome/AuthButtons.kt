@@ -17,8 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.less
-import com.example.mobile_hw2.generated.resources.more
+import com.example.mobile_hw2.generated.resources.welcome_less
+import com.example.mobile_hw2.generated.resources.welcome_more
 import com.example.mobile_hw2.ui.theme.StepikTheme
 import org.jetbrains.compose.resources.stringResource
 
@@ -62,7 +62,7 @@ fun AuthButtons() {
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = if (expanded) stringResource(Res.string.less) else stringResource(Res.string.more),
+            text = if (expanded) stringResource(Res.string.welcome_less) else stringResource(Res.string.welcome_more),
             color = StepikTheme.colors.accent,
             modifier = Modifier.clickable {
                 expanded = !expanded

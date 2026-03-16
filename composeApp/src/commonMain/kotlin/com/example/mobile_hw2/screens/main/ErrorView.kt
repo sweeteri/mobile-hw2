@@ -23,9 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.cannot_load_data
-import com.example.mobile_hw2.generated.resources.error_occured
-import com.example.mobile_hw2.generated.resources.try_again
+import com.example.mobile_hw2.generated.resources.home_error_button
+import com.example.mobile_hw2.generated.resources.home_error_message
+import com.example.mobile_hw2.generated.resources.home_error_title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -47,7 +47,7 @@ fun ErrorView(message: String?, onRetry: () -> Unit) {
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = stringResource(Res.string.error_occured),
+            text = stringResource(Res.string.home_error_title),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
@@ -55,7 +55,7 @@ fun ErrorView(message: String?, onRetry: () -> Unit) {
         Spacer(Modifier.height(8.dp))
 
         Text(
-            text = message ?: stringResource(Res.string.cannot_load_data),
+            text = message ?: stringResource(Res.string.home_error_message),
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray,
             textAlign = TextAlign.Center
@@ -68,7 +68,7 @@ fun ErrorView(message: String?, onRetry: () -> Unit) {
             shape = RoundedCornerShape(12.dp),
             contentPadding = PaddingValues(horizontal = 32.dp, vertical = 12.dp)
         ) {
-            Text(stringResource(Res.string.try_again))
+            Text(stringResource(Res.string.home_error_button))
         }
     }
 }

@@ -26,12 +26,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.mobile_hw2.data.model.Course
+import kotlin.math.round
 
 fun formatLearners(count: Int): String {
     return when {
         count >= 1000 -> {
             val thousands = count / 1000.0
-            val rounded = kotlin.math.round(thousands * 10) / 10.0
+            val rounded = round(thousands * 10) / 10.0
             "${rounded}k"
         }
 

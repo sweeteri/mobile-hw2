@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.cannot_load_data
-import com.example.mobile_hw2.generated.resources.try_again
+import com.example.mobile_hw2.generated.resources.home_error_button
+import com.example.mobile_hw2.generated.resources.home_error_message
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -21,7 +21,7 @@ fun PaginationErrorRow(onRetry: () -> Unit) {
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(stringResource(Res.string.cannot_load_data), color = Color.Red)
-        Button(onClick = onRetry) { Text(stringResource(Res.string.try_again)) }
+        Text(stringResource(Res.string.home_error_message), color = Color.Red)
+        Button(onClick = onRetry) { Text(stringResource(Res.string.home_error_button)) }
     }
 }

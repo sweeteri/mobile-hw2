@@ -7,8 +7,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import com.example.mobile_hw2.generated.resources.Res
-import com.example.mobile_hw2.generated.resources.hide_password
-import com.example.mobile_hw2.generated.resources.show_password
+import com.example.mobile_hw2.generated.resources.login_hide_password
+import com.example.mobile_hw2.generated.resources.login_show_password
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -18,9 +18,9 @@ fun PasswordVisibilityIcon(
 ) {
     IconButton(onClick = onToggle) {
         val (icon, description) = if (isVisible) {
-            Icons.Default.Visibility to stringResource(Res.string.hide_password)
+            Icons.Default.Visibility to stringResource(Res.string.login_hide_password)
         } else {
-            Icons.Default.VisibilityOff to stringResource(Res.string.show_password)
+            Icons.Default.VisibilityOff to stringResource(Res.string.login_show_password)
         }
         Icon(
             imageVector = icon,

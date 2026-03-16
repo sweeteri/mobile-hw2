@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.mobile_hw2.generated.resources.Res
 import com.example.mobile_hw2.generated.resources.login_label
-import com.example.mobile_hw2.generated.resources.password_label
+import com.example.mobile_hw2.generated.resources.login_password_label
 import com.example.mobile_hw2.ui.theme.StepikTheme
 import org.jetbrains.compose.resources.stringResource
 
@@ -58,7 +58,7 @@ fun LoginForm(
             onValueChange = onPasswordChange,
             placeholder = {
                 Text(
-                    stringResource(Res.string.password_label),
+                    stringResource(Res.string.login_password_label),
                     color = textSecondary
                 )
             },
