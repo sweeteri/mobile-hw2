@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ expect fun BackHandlerWithExit()
 fun MainScreen(viewModel: MainViewModel = viewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
 
     BackHandlerWithExit()
 
@@ -44,7 +46,7 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
         ScreenHeader(stringResource(Res.string.home_title))
 
         SearchField(
-            query = state.searchQuery,
+            query = searchQuery,
             onQueryChange = viewModel::onSearchQueryChange
         )
 

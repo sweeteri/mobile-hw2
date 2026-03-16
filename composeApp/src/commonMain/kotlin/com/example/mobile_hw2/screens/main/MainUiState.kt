@@ -4,7 +4,6 @@ import com.example.mobile_hw2.data.model.Course
 
 data class MainUiState(
     val courses: List<Course> = emptyList(),
-    val searchQuery: String = "",
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val error: String? = null,

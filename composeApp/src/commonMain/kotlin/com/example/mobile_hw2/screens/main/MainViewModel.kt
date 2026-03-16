@@ -3,10 +3,12 @@ package com.example.mobile_hw2.screens.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobile_hw2.data.model.Course
+import com.example.mobile_hw2.data.model.CourseDto
 import com.example.mobile_hw2.data.repository.CoursesRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -18,6 +20,7 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
     private val _state = MutableStateFlow(MainUiState())
     val state = _state.asStateFlow()
     private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
     private var fetchJob: Job? = null
 
     init {
@@ -38,7 +41,6 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
 
     fun onSearchQueryChange(newQuery: String) {
         _searchQuery.value = newQuery
-        _state.update { it.copy(searchQuery = newQuery) }
     }
 
     private fun resetAndLoad(query: String) {
@@ -63,26 +65,11 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
 
         fetchJob = viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
-
             repository.getCourses(_state.value.currentPage, query)
                 .onSuccess { response ->
                     _state.update { actualState ->
-                        val newCourses = response.courses.map { dto ->
-                            val roundedRating = if (dto.average > 0) {
-                                kotlin.math.round(dto.average * 10) / 10.0
-                            } else {
-                                0.0
-                            }
-                            Course(
-                                id = dto.id.toString(),
-                                title = dto.title,
-                                author = dto.summary ?: "Stepik",
-                                imageUrl = dto.cover ?: "",
-                                average = roundedRating,
-                                learnersCount = dto.learnersCount ?: 0
-                            )
-                        }
 
+                        val newCourses = mapCourses(response.courses)
                         actualState.copy(
                             courses = actualState.courses + newCourses,
                             currentPage = response.meta.page + 1,
@@ -94,6 +81,25 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
                 .onFailure { error ->
                     _state.update { it.copy(isLoading = false, error = error.message) }
                 }
+        }
+    }
+
+    private fun mapCourses(courses: List<CourseDto>): List<Course> {
+        return courses.map { dto ->
+            val roundedRating = if (dto.average > 0) {
+                kotlin.math.round(dto.average * 10) / 10.0
+            } else {
+                0.0
+            }
+
+            Course(
+                id = dto.id.toString(),
+                title = dto.title,
+                author = dto.summary ?: "Stepik",
+                imageUrl = dto.cover ?: "",
+                average = roundedRating,
+                learnersCount = dto.learnersCount ?: 0
+            )
         }
     }
 
