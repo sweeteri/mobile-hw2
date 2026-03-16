@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Welcome / Auth -->
-    <string name="sign_up">Регистрация</string>
-    <string name="sign_in_general">Вход через социальные сети</string>
-    <string name="sign_in_email">Вход по e-mail</string>
-    <string name="less">Меньше</string>
-    <string name="more">Больше</string>
-    <string name="stepik">Степик</string>
+    <string name="welcome_sign_up">Регистрация</string>
+    <string name="welcome_sign_in_general">Вход через социальные сети</string>
+    <string name="welcome_sign_in_email">Вход по e-mail</string>
+    <string name="welcome_less">Меньше</string>
+    <string name="welcome_more">Больше</string>
+    <string name="welcome_stepik">Степик</string>
 
     <!-- Login Screen -->
     <string name="login_screen_title">Войти</string>
     <string name="login_label">E-mail</string>
     <string name="login_placeholder">E-mail или имя пользователя</string>
-    <string name="password_label">Пароль</string>
-    <string name="password_placeholder">Пароль</string>
-    <string name="remind_password">Напомнить пароль</string>
-    <string name="show_password">Показать пароль</string>
-    <string name="hide_password">Скрыть пароль</string>
+    <string name="login_password_label">Пароль</string>
+    <string name="login_password_placeholder">Пароль</string>
+    <string name="login_remind_password">Напомнить пароль</string>
+    <string name="login_show_password">Показать пароль</string>
+    <string name="login_hide_password">Скрыть пароль</string>
 
     <!-- Home Screen -->
-    <string name="home">Главная</string>
+    <string name="home_title">Главная</string>
+    <string name="home_search_empty_title">Ничего не найдено</string>
+    <string name="home_search_empty_message">Попробуйте изменить поисковый запрос или фильтры</string>
+    <string name="home_error_button">Попробовать снова</string>
+    <string name="home_error_message">Не удалось загрузить данные. Проверьте соединение с интернетом.</string>
+    <string name="home_search_hint">Поиск курсов...</string>
+    <string name="home_error_title">Произошла ошибка.</string>
 </resources>
