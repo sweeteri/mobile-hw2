@@ -78,11 +78,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.mobile_hw2"
+    namespace = "com.sweeteri.stepikclient"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.example.mobile_hw2"
+        applicationId = "com.sweeteri.stepikclient"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -101,5 +101,5 @@ dependencies {
 
 compose.resources {
     publicResClass = true
-    packageOfResClass = "com.example.mobile_hw2.generated.resources"
+    packageOfResClass = "com.sweeteri.stepikclient.generated.resources"
 }
