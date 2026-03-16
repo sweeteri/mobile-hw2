@@ -27,7 +27,6 @@ expect fun BackHandlerWithExit()
 fun MainScreen(viewModel: MainViewModel = viewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
-    val searchQuery by viewModel.searchQuery.collectAsState()
 
     BackHandlerWithExit()
 
@@ -46,7 +45,7 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
         ScreenHeader(stringResource(Res.string.home_title))
 
         SearchField(
-            query = searchQuery,
+            query = state.searchQuery,
             onQueryChange = viewModel::onSearchQueryChange
         )
 

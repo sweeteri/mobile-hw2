@@ -8,10 +8,10 @@ import com.example.mobile_hw2.data.repository.CoursesRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -19,8 +19,6 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
 
     private val _state = MutableStateFlow(MainUiState())
     val state = _state.asStateFlow()
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
     private var fetchJob: Job? = null
 
     init {
@@ -30,7 +28,8 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
     @OptIn(FlowPreview::class)
     private fun setupSearch() {
         viewModelScope.launch {
-            _searchQuery
+            state
+                .map { it.searchQuery }
                 .debounce(500)
                 .distinctUntilChanged()
                 .collect { query ->
@@ -40,7 +39,9 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
     }
 
     fun onSearchQueryChange(newQuery: String) {
-        _searchQuery.value = newQuery
+        _state.update {
+            it.copy(searchQuery = newQuery)
+        }
     }
 
     private fun resetAndLoad(query: String) {
@@ -59,9 +60,12 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
         loadNextPage(query)
     }
 
-    fun loadNextPage(query: String = _searchQuery.value) {
+    fun loadNextPage(query: String = _state.value.searchQuery) {
         val currentState = _state.value
-        if (currentState.isLoading || !currentState.hasNextPage) return
+        if (currentState.isLoading ||
+            !currentState.hasNextPage ||
+            fetchJob?.isActive == true
+        ) return
 
         fetchJob = viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
@@ -104,6 +108,6 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
     }
 
     fun refresh() {
-        resetAndLoad(_searchQuery.value)
+        resetAndLoad(_state.value.searchQuery)
     }
 }
