@@ -1,6 +1,5 @@
-package com.example.mobile_hw2.data.remote
+package com.example.mobile_hw2.data.repository
 
-import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -16,6 +15,7 @@ object NetworkClient {
         isLenient = true
         ignoreUnknownKeys = true
     }
+
     val httpClient = HttpClient {
         install(ContentNegotiation) {
             json(jsonConfig)
@@ -28,9 +28,5 @@ object NetworkClient {
                 }
             }
         }
-    }
-
-    fun initLogger() {
-        Napier.base(DebugAntilog())
     }
 }
