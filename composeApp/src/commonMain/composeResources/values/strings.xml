@@ -42,4 +42,9 @@
     <string name="onboarding_desc_platform">Learn at your own pace from any device, save progress, and get feedback</string>
     <string name="onboarding_desc_courses">Interactive assignments, tests, and video lectures from top teachers and universities</string>
     <string name="onboarding_desc_certificates">Validate your knowledge with official certificates after successfully completing courses</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_authorized_status">You are authorized</string>
+    <string name="profile_edit_button">Edit Profile</string>
+    <string name="profile_logout_button">Logout</string>
+    <string name="profile_test_name">Name Surname</string>
 </resources>

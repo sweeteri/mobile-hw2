@@ -20,18 +20,25 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sweeteri.stepikclient.data.repository.CoursesRepository
+import com.sweeteri.stepikclient.data.repository.ProfileRepository
 import com.sweeteri.stepikclient.navigation.Screen
 import com.sweeteri.stepikclient.screens.login.LoginScreen
 import com.sweeteri.stepikclient.screens.main.MainScreen
+import com.sweeteri.stepikclient.screens.main.MainViewModel
 import com.sweeteri.stepikclient.screens.onboarding.OnboardingScreen
 import com.sweeteri.stepikclient.screens.onboarding.StartViewModel
+import com.sweeteri.stepikclient.screens.profile.ProfileScreen
 import com.sweeteri.stepikclient.screens.welcome.WelcomeScreen
 import com.sweeteri.stepikclient.ui.theme.StepikTheme
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun App() {
+fun App(
+    coursesRepository: CoursesRepository,
+    profileRepository: ProfileRepository
+) {
     StepikTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -124,7 +131,21 @@ fun App() {
                 }
 
                 composable(Screen.Main.route) {
-                    MainScreen()
+                    val viewModel = remember { MainViewModel(coursesRepository) }
+
+                    MainScreen(
+                        viewModel = viewModel,
+                        onProfileClick = { navController.navigate(Screen.Profile.route) } // 🔹
+                    )
+                }
+                composable(Screen.Profile.route) {
+                    ProfileScreen(
+                        onLogout = {
+                            navController.navigate(Screen.Login.route) {
+                                popUpTo(Screen.Main.route) { inclusive = true }
+                            }
+                        }
+                    )
                 }
             }
         }

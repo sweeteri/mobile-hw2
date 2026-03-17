@@ -41,4 +41,9 @@
     <string name="onboarding_desc_platform">Учитесь в удобном темпе с любого устройства, сохраняйте прогресс и получайте обратную связь</string>
     <string name="onboarding_desc_courses">Интерактивные задания, тесты и видео-лекции от ведущих преподавателей и университетов</string>
     <string name="onboarding_desc_certificates">Подтверждайте свои знания официальными сертификатами после успешного прохождения курсов</string>
+    <string name="profile_title">Профиль</string>
+    <string name="profile_authorized_status">Вы авторизованы</string>
+    <string name="profile_edit_button">Редактировать профиль</string>
+    <string name="profile_logout_button">Выйти</string>
+    <string name="profile_test_name">Имя Фамилия</string>
 </resources>
