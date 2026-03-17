@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.sweeteri.stepikclient.generated.resources.Res
@@ -25,7 +24,7 @@ expect fun BackHandlerWithExit()
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: MainViewModel = viewModel()) {
+fun MainScreen(viewModel: MainViewModel, onProfileClick: () -> Unit) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
@@ -43,7 +42,7 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        ScreenHeader(stringResource(Res.string.home_title))
+        ScreenHeader(stringResource(Res.string.home_title), onProfileClick = onProfileClick)
 
         SearchField(
             query = state.searchQuery,
