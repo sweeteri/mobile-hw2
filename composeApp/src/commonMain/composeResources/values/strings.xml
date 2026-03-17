@@ -27,4 +27,19 @@
     <string name="home_error_message">Failed to load data. Please check your internet connection.</string>
     <string name="home_search_hint">Search courses...</string>
     <string name="home_error_title">An error occurred.</string>
+
+    <!-- Onboarding Screen -->
+    <string name="onboarding_title_stepik">What is Stepik</string>
+    <string name="onboarding_title_platform">Platform Features</string>
+    <string name="onboarding_title_courses">Taking Courses</string>
+    <string name="onboarding_title_certificates">Certificates</string>
+
+    <string name="onboarding_button_skip">Skip</string>
+    <string name="onboarding_button_next">Next</string>
+    <string name="onboarding_button_start">Start</string>
+
+    <string name="onboarding_desc_stepik">Educational platform with thousands of courses in programming, mathematics, and other disciplines</string>
+    <string name="onboarding_desc_platform">Learn at your own pace from any device, save progress, and get feedback</string>
+    <string name="onboarding_desc_courses">Interactive assignments, tests, and video lectures from top teachers and universities</string>
+    <string name="onboarding_desc_certificates">Validate your knowledge with official certificates after successfully completing courses</string>
 </resources>

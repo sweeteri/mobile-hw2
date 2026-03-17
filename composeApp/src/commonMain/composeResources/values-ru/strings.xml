@@ -26,4 +26,19 @@
     <string name="home_error_message">Не удалось загрузить данные. Проверьте соединение с интернетом.</string>
     <string name="home_search_hint">Поиск курсов...</string>
     <string name="home_error_title">Произошла ошибка.</string>
+
+    <!-- Onboarding Screen -->
+    <string name="onboarding_title_stepik">Что такое Stepik</string>
+    <string name="onboarding_title_platform">Возможности платформы</string>
+    <string name="onboarding_title_courses">Прохождение курсов</string>
+    <string name="onboarding_title_certificates">Сертификаты</string>
+
+    <string name="onboarding_button_skip">Пропустить</string>
+    <string name="onboarding_button_next">Далее</string>
+    <string name="onboarding_button_start">Начать</string>
+
+    <string name="onboarding_desc_stepik">Образовательная платформа с тысячами курсов по программированию, математике и другим дисциплинам</string>
+    <string name="onboarding_desc_platform">Учитесь в удобном темпе с любого устройства, сохраняйте прогресс и получайте обратную связь</string>
+    <string name="onboarding_desc_courses">Интерактивные задания, тесты и видео-лекции от ведущих преподавателей и университетов</string>
+    <string name="onboarding_desc_certificates">Подтверждайте свои знания официальными сертификатами после успешного прохождения курсов</string>
 </resources>
