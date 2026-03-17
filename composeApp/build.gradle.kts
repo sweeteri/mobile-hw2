@@ -48,6 +48,8 @@ kotlin {
 
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.napier)
+            implementation(libs.accompanist.swiperefresh)
+
         }
 
         androidMain.dependencies {
@@ -55,6 +57,7 @@ kotlin {
             implementation(libs.coil.network.okhttp)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.datastore)
         }
 
         val iosMain by creating {

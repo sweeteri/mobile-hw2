@@ -108,6 +108,30 @@ class MainViewModel(private val repository: CoursesRepository = CoursesRepositor
     }
 
     fun refresh() {
-        resetAndLoad(_state.value.searchQuery)
+        fetchJob?.cancel()
+
+        viewModelScope.launch {
+            _state.update { it.copy(isRefreshing = true, error = null) }
+
+            repository.getCourses(1, _state.value.searchQuery)
+                .onSuccess { response ->
+                    _state.update {
+                        it.copy(
+                            courses = mapCourses(response.courses),
+                            currentPage = response.meta.page + 1,
+                            hasNextPage = response.meta.hasNext,
+                            isRefreshing = false
+                        )
+                    }
+                }
+                .onFailure { error ->
+                    _state.update {
+                        it.copy(
+                            isRefreshing = false,
+                            error = error.message
+                        )
+                    }
+                }
+        }
     }
 }
