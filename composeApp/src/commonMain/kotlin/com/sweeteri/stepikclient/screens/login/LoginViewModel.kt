@@ -2,6 +2,7 @@ package com.sweeteri.stepikclient.screens.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sweeteri.stepikclient.AppPreferences
 import com.sweeteri.stepikclient.data.repository.LoginRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val repository: LoginRepository
+, private val prefs: AppPreferences
+) : ViewModel() {
     private val _state = MutableStateFlow(LoginUiState())
     val state: StateFlow<LoginUiState> = _state.asStateFlow()
     private val _events = MutableSharedFlow<LoginUiEvent>()
@@ -51,6 +54,7 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
 
             result.fold(
                 onSuccess = {
+                    prefs.saveToken("mock_token")
                     _events.emit(LoginUiEvent.LoginSuccess)
                     _state.update { it.copy(error = null) }
                 },
