@@ -20,24 +20,25 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sweeteri.stepikclient.data.repository.CoursesRepository
-import com.sweeteri.stepikclient.data.repository.ProfileRepository
-import com.sweeteri.stepikclient.navigation.Screen
-import com.sweeteri.stepikclient.screens.login.LoginScreen
-import com.sweeteri.stepikclient.screens.main.MainScreen
-import com.sweeteri.stepikclient.screens.main.MainViewModel
-import com.sweeteri.stepikclient.screens.onboarding.OnboardingScreen
-import com.sweeteri.stepikclient.screens.onboarding.StartViewModel
-import com.sweeteri.stepikclient.screens.profile.ProfileScreen
-import com.sweeteri.stepikclient.screens.welcome.WelcomeScreen
-import com.sweeteri.stepikclient.ui.theme.StepikTheme
+import com.sweeteri.stepikclient.presentation.navigation.Screen
+import com.sweeteri.stepikclient.presentation.auth.login.LoginScreen
+import com.sweeteri.stepikclient.presentation.main.MainScreen
+import com.sweeteri.stepikclient.presentation.main.MainViewModel
+import com.sweeteri.stepikclient.presentation.onboarding.OnboardingScreen
+import com.sweeteri.stepikclient.presentation.onboarding.StartViewModel
+import com.sweeteri.stepikclient.presentation.profile.ProfileScreen
+import com.sweeteri.stepikclient.presentation.auth.welcome.WelcomeScreen
+import com.sweeteri.stepikclient.presentation.common.theme.StepikTheme
 import kotlinx.coroutines.launch
+import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
+import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
 
 
 @Composable
-fun App(
-    coursesRepository: CoursesRepository,
-    profileRepository: ProfileRepository
+fun App(prefs: AppPreferences,
+        mainViewModel: MainViewModel,
+        profileViewModel: ProfileViewModel,
+        loginViewModel: LoginViewModel
 ) {
     StepikTheme {
         Surface(
@@ -47,7 +48,6 @@ fun App(
 
             val navController = rememberNavController()
 
-            val prefs = remember { createAppPreferences() }
 
             val scope = rememberCoroutineScope()
 
@@ -110,6 +110,7 @@ fun App(
 
                 composable(Screen.Login.route) {
                     LoginScreen(
+                        viewModel = loginViewModel,
                         onBackClick = {
                             navController.popBackStack()
                         },
@@ -131,15 +132,15 @@ fun App(
                 }
 
                 composable(Screen.Main.route) {
-                    val viewModel = remember { MainViewModel(coursesRepository) }
 
                     MainScreen(
-                        viewModel = viewModel,
+                        viewModel = mainViewModel,
                         onProfileClick = { navController.navigate(Screen.Profile.route) } // 🔹
                     )
                 }
                 composable(Screen.Profile.route) {
                     ProfileScreen(
+                        viewModel = profileViewModel,
                         onLogout = {
                             navController.navigate(Screen.Login.route) {
                                 popUpTo(Screen.Main.route) { inclusive = true }

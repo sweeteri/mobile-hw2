@@ -1,9 +1,10 @@
 package com.sweeteri.stepikclient.data.repository
-import com.sweeteri.stepikclient.data.remote.StepikApiClient
-import com.sweeteri.stepikclient.data.model.Course
-import com.sweeteri.stepikclient.data.local.toEntity
+
+import com.sweeteri.stepikclient.data.remote.api.StepikApiClient
+import com.sweeteri.stepikclient.data.local.model.Course
+import com.sweeteri.stepikclient.data.local.mapper.toEntity
 import com.sweeteri.stepikclient.data.local.CourseDao
-import com.sweeteri.stepikclient.data.local.toDomain
+import com.sweeteri.stepikclient.data.local.mapper.toDomain
 import io.github.aakira.napier.Napier
 import kotlin.math.round
 

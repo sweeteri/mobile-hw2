@@ -1,7 +1,7 @@
 package com.sweeteri.stepikclient
 
 import android.app.Application
-import com.sweeteri.stepikclient.utils.LoggerSetup
+import com.sweeteri.stepikclient.presentation.common.utils.LoggerSetup
 
 class MyApplication : Application() {
     override fun onCreate() {

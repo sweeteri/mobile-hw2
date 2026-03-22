@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -51,6 +52,7 @@ kotlin {
             implementation(libs.napier)
             implementation(libs.accompanist.swiperefresh)
             implementation(libs.room.runtime)
+            implementation(libs.koin.core)
 
         }
 
@@ -62,6 +64,8 @@ kotlin {
             implementation(libs.androidx.datastore)
             implementation(libs.room.runtime)
             implementation(libs.room.ktx)
+            implementation(libs.koin.android)
+            implementation(libs.koin.compose)
         }
 
         val iosMain by creating {
@@ -112,4 +116,9 @@ dependencies {
 compose.resources {
     publicResClass = true
     packageOfResClass = "com.sweeteri.stepikclient.generated.resources"
+}
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom(files("$rootDir/detekt.yml"))
 }
