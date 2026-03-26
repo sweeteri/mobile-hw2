@@ -61,7 +61,7 @@ class MainViewModel(private val repository: CoursesRepository) : ViewModel() {
     fun loadNextPage(query: String = _state.value.searchQuery) {
         val currentState = _state.value
         if (currentState.isLoading || !currentState.hasNextPage || fetchJob?.isActive == true) return
-
+        fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             repository.getCourses(currentState.currentPage, query)
