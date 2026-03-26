@@ -24,10 +24,12 @@ import com.sweeteri.stepikclient.presentation.navigation.Screen
 import com.sweeteri.stepikclient.presentation.profile.ProfileScreen
 import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
 import com.sweeteri.stepikclient.presentation.start.StartScreen
+import com.sweeteri.stepikclient.presentation.start.StartViewModel
 
 
 @Composable
 fun App(
+    prefs: AppPreferences,
     mainViewModel: MainViewModel,
     profileViewModel: ProfileViewModel,
     loginViewModel: LoginViewModel,

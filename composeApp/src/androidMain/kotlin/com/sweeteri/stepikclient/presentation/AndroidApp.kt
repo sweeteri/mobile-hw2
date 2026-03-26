@@ -6,6 +6,7 @@ import com.sweeteri.stepikclient.AppPreferences
 import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
 import com.sweeteri.stepikclient.presentation.main.MainViewModel
 import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
+import com.sweeteri.stepikclient.presentation.start.StartViewModel
 import org.koin.androidx.compose.getKoin
 import org.koin.androidx.compose.koinViewModel
 
@@ -17,11 +18,13 @@ fun AndroidApp() {
     val mainViewModel: MainViewModel = koinViewModel()
     val profileViewModel: ProfileViewModel = koinViewModel()
     val loginViewModel: LoginViewModel = koinViewModel()
+    val startViewModel: StartViewModel = koinViewModel()
 
     App(
         prefs = prefs,
         mainViewModel = mainViewModel,
         profileViewModel = profileViewModel,
-        loginViewModel = loginViewModel
+        loginViewModel = loginViewModel,
+        startViewModel = startViewModel
     )
 }

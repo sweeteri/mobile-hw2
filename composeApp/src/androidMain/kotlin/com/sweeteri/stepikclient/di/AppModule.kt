@@ -9,6 +9,7 @@ import androidx.room.Room
 import com.sweeteri.stepikclient.AppPreferences
 import com.sweeteri.stepikclient.data.local.AppDatabase
 import com.sweeteri.stepikclient.data.local.AppPreferencesImpl
+import com.sweeteri.stepikclient.data.remote.api.StepikApiClient
 import com.sweeteri.stepikclient.data.repository.AuthRepository
 import com.sweeteri.stepikclient.data.repository.AuthRepositoryImpl
 import com.sweeteri.stepikclient.data.repository.CoursesRepository
@@ -47,6 +48,7 @@ val appModule = module {
     }
 
     single { get<AppDatabase>().courseDao() }
+    single { StepikApiClient() }
 
     single<CoursesRepository> { CoursesRepositoryImpl(get(), get()) }
     single<ProfileRepository> { ProfileRepositoryImpl(get(), get()) }
