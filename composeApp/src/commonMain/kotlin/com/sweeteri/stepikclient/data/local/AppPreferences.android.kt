@@ -11,12 +11,6 @@ import kotlinx.coroutines.flow.first
 class AppPreferencesImpl(
     private val dataStore: DataStore<Preferences>
 ) : AppPreferences {
-
-    companion object {
-        val ONBOARDING = booleanPreferencesKey("onboarding")
-        val TOKEN = stringPreferencesKey("token")
-    }
-
     override suspend fun setOnboardingShown() {
         dataStore.edit { it[ONBOARDING] = true }
     }
@@ -35,5 +29,10 @@ class AppPreferencesImpl(
 
     override suspend fun clearToken() {
         dataStore.edit { it.remove(TOKEN) }
+    }
+
+    companion object {
+        val ONBOARDING = booleanPreferencesKey("onboarding")
+        val TOKEN = stringPreferencesKey("token")
     }
 }
