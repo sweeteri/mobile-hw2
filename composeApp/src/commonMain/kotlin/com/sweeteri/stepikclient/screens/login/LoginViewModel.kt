@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: LoginRepository
-, private val prefs: AppPreferences
+
 ) : ViewModel() {
     private val _state = MutableStateFlow(LoginUiState())
     val state: StateFlow<LoginUiState> = _state.asStateFlow()
@@ -54,7 +54,6 @@ class LoginViewModel(private val repository: LoginRepository
 
             result.fold(
                 onSuccess = {
-                    prefs.saveToken("mock_token")
                     _events.emit(LoginUiEvent.LoginSuccess)
                     _state.update { it.copy(error = null) }
                 },
