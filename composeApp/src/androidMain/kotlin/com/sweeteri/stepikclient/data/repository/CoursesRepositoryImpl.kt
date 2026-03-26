@@ -1,16 +1,18 @@
 package com.sweeteri.stepikclient.data.repository
 
-import com.sweeteri.stepikclient.data.remote.api.StepikApiClient
-import com.sweeteri.stepikclient.data.local.model.Course
-import com.sweeteri.stepikclient.data.local.mapper.toEntity
 import com.sweeteri.stepikclient.data.local.CourseDao
 import com.sweeteri.stepikclient.data.local.mapper.toDomain
+import com.sweeteri.stepikclient.data.local.mapper.toEntity
+import com.sweeteri.stepikclient.data.local.model.Course
+import com.sweeteri.stepikclient.data.remote.api.StepikApiClient
 import io.github.aakira.napier.Napier
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.round
 
-class CoursesRepositoryImpl(private val courseDao: CourseDao) : CoursesRepository {
-
-    private val apiClient = StepikApiClient()
+class CoursesRepositoryImpl(
+    private val courseDao: CourseDao,
+    private val apiClient: StepikApiClient
+) : CoursesRepository {
 
     override suspend fun getCourses(page: Int, query: String): Result<List<Course>> {
         return try {
@@ -33,7 +35,9 @@ class CoursesRepositoryImpl(private val courseDao: CourseDao) : CoursesRepositor
 
             Result.success(updatedCourses)
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
             Napier.e("Loading courses failed", e)
+
             val cached = courseDao.getAll().map { it.toDomain() }
             if (cached.isNotEmpty()) Result.success(cached)
             else Result.failure(e)

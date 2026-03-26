@@ -5,40 +5,33 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sweeteri.stepikclient.presentation.navigation.Screen
 import com.sweeteri.stepikclient.presentation.auth.login.LoginScreen
-import com.sweeteri.stepikclient.presentation.main.MainScreen
-import com.sweeteri.stepikclient.presentation.main.MainViewModel
-import com.sweeteri.stepikclient.presentation.onboarding.OnboardingScreen
-import com.sweeteri.stepikclient.presentation.onboarding.StartViewModel
-import com.sweeteri.stepikclient.presentation.profile.ProfileScreen
+import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
 import com.sweeteri.stepikclient.presentation.auth.welcome.WelcomeScreen
 import com.sweeteri.stepikclient.presentation.common.theme.StepikTheme
-import kotlinx.coroutines.launch
+import com.sweeteri.stepikclient.presentation.main.MainScreen
+import com.sweeteri.stepikclient.presentation.main.MainViewModel
+import com.sweeteri.stepikclient.presentation.navigation.Screen
+import com.sweeteri.stepikclient.presentation.profile.ProfileScreen
 import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
-import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
+import com.sweeteri.stepikclient.presentation.start.StartScreen
 
 
 @Composable
-fun App(prefs: AppPreferences,
-        mainViewModel: MainViewModel,
-        profileViewModel: ProfileViewModel,
-        loginViewModel: LoginViewModel
+fun App(
+    mainViewModel: MainViewModel,
+    profileViewModel: ProfileViewModel,
+    loginViewModel: LoginViewModel,
+    startViewModel: StartViewModel
 ) {
     StepikTheme {
         Surface(
@@ -48,29 +41,9 @@ fun App(prefs: AppPreferences,
 
             val navController = rememberNavController()
 
-
-            val scope = rememberCoroutineScope()
-
-            val startViewModel = remember {
-                StartViewModel(prefs)
-            }
-
-            val startDestination by startViewModel.startDestination.collectAsState()
-
-            if (startDestination == null) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-                return@Surface
-            }
-
             NavHost(
                 navController = navController,
-                startDestination = startDestination!!,
-
+                startDestination = Screen.Start.route,
                 enterTransition = {
                     slideInHorizontally(tween(500)) { it } + fadeIn(tween(500))
                 },
@@ -84,16 +57,12 @@ fun App(prefs: AppPreferences,
                     slideOutHorizontally(tween(500)) { it } + fadeOut(tween(500))
                 }
             ) {
-
-                composable(Screen.Onboarding.route) {
-                    OnboardingScreen(
-                        onFinish = {
-                            scope.launch {
-                                prefs.setOnboardingShown()
-
-                                navController.navigate(Screen.Login.route) {
-                                    popUpTo(Screen.Onboarding.route) { inclusive = true }
-                                }
+                composable(Screen.Start.route) {
+                    StartScreen(
+                        viewModel = startViewModel,
+                        onNavigate = { route ->
+                            navController.navigate(route) {
+                                popUpTo(Screen.Start.route) { inclusive = true }
                             }
                         }
                     )
@@ -111,31 +80,26 @@ fun App(prefs: AppPreferences,
                 composable(Screen.Login.route) {
                     LoginScreen(
                         viewModel = loginViewModel,
-                        onBackClick = {
-                            navController.popBackStack()
-                        },
+                        onBackClick = { navController.popBackStack() },
                         onRegisterClick = {
                             navController.navigate(Screen.Welcome.route) {
                                 popUpTo(Screen.Login.route) { inclusive = true }
                             }
                         },
                         onLoginSuccess = {
-                            scope.launch {
-                                prefs.saveToken("mock_token")
-
-                                navController.navigate(Screen.Main.route) {
-                                    popUpTo(Screen.Login.route) { inclusive = true }
-                                }
+                            navController.navigate(Screen.Main.route) {
+                                popUpTo(Screen.Login.route) { inclusive = true }
                             }
                         }
                     )
                 }
 
                 composable(Screen.Main.route) {
-
                     MainScreen(
                         viewModel = mainViewModel,
-                        onProfileClick = { navController.navigate(Screen.Profile.route) } // 🔹
+                        onProfileClick = {
+                            navController.navigate(Screen.Profile.route)
+                        }
                     )
                 }
                 composable(Screen.Profile.route) {

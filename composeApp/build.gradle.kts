@@ -53,6 +53,8 @@ kotlin {
             implementation(libs.accompanist.swiperefresh)
             implementation(libs.room.runtime)
             implementation(libs.koin.core)
+            implementation(libs.datastore.preferences.core)
+
 
         }
 
@@ -66,6 +68,7 @@ kotlin {
             implementation(libs.room.ktx)
             implementation(libs.koin.android)
             implementation(libs.koin.compose)
+
         }
 
         val iosMain by creating {

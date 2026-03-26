@@ -13,8 +13,6 @@ fun LoginScreen(
     onBackClick: () -> Unit,
     onLoginSuccess: () -> Unit
 ) {
-
-
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {

@@ -9,6 +9,8 @@ import androidx.room.Room
 import com.sweeteri.stepikclient.AppPreferences
 import com.sweeteri.stepikclient.data.local.AppDatabase
 import com.sweeteri.stepikclient.data.local.AppPreferencesImpl
+import com.sweeteri.stepikclient.data.repository.AuthRepository
+import com.sweeteri.stepikclient.data.repository.AuthRepositoryImpl
 import com.sweeteri.stepikclient.data.repository.CoursesRepository
 import com.sweeteri.stepikclient.data.repository.CoursesRepositoryImpl
 import com.sweeteri.stepikclient.data.repository.LoginRepository
@@ -21,6 +23,7 @@ import com.sweeteri.stepikclient.domain.usecase.LogoutUseCase
 import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
 import com.sweeteri.stepikclient.presentation.main.MainViewModel
 import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
+import com.sweeteri.stepikclient.presentation.start.StartViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -45,9 +48,10 @@ val appModule = module {
 
     single { get<AppDatabase>().courseDao() }
 
-    single<CoursesRepository> { CoursesRepositoryImpl(get()) }
+    single<CoursesRepository> { CoursesRepositoryImpl(get(), get()) }
     single<ProfileRepository> { ProfileRepositoryImpl(get(), get()) }
-    single<LoginRepository> { LoginRepositoryImpl() }
+    single<LoginRepository> { LoginRepositoryImpl(get()) }
+    single <AuthRepository>{ AuthRepositoryImpl(get()) }
 
     single { GetCoursesUseCase(get()) }
     single { LoginUseCase(get()) }
@@ -56,4 +60,5 @@ val appModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { LoginViewModel(get(), get()) }
+    viewModel { StartViewModel(get()) }
 }
