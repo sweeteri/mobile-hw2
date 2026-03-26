@@ -9,8 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -21,20 +22,17 @@ import com.sweeteri.stepikclient.presentation.common.theme.StepikTheme
 import com.sweeteri.stepikclient.presentation.main.MainScreen
 import com.sweeteri.stepikclient.presentation.main.MainViewModel
 import com.sweeteri.stepikclient.presentation.navigation.Screen
+import com.sweeteri.stepikclient.presentation.onboarding.OnboardingScreen
+import com.sweeteri.stepikclient.presentation.onboarding.OnboardingViewModel
 import com.sweeteri.stepikclient.presentation.profile.ProfileScreen
 import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
 import com.sweeteri.stepikclient.presentation.start.StartScreen
 import com.sweeteri.stepikclient.presentation.start.StartViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
-fun App(
-    prefs: AppPreferences,
-    mainViewModel: MainViewModel,
-    profileViewModel: ProfileViewModel,
-    loginViewModel: LoginViewModel,
-    startViewModel: StartViewModel
-) {
+fun App() {
     StepikTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -42,7 +40,6 @@ fun App(
         ) {
 
             val navController = rememberNavController()
-
             NavHost(
                 navController = navController,
                 startDestination = Screen.Start.route,
@@ -60,6 +57,7 @@ fun App(
                 }
             ) {
                 composable(Screen.Start.route) {
+                    val startViewModel: StartViewModel = koinViewModel()
                     StartScreen(
                         viewModel = startViewModel,
                         onNavigate = { route ->
@@ -67,6 +65,19 @@ fun App(
                                 popUpTo(Screen.Start.route) { inclusive = true }
                             }
                         }
+                    )
+                }
+                composable(Screen.Onboarding.route) {
+                    val onboardingViewModel: OnboardingViewModel = koinViewModel()
+                    LaunchedEffect(Unit) {
+                        onboardingViewModel.events.collect {
+                            navController.navigate(Screen.Login.route) {
+                                popUpTo(Screen.Onboarding.route) { inclusive = true }
+                            }
+                        }
+                    }
+                    OnboardingScreen(
+                        onFinish = { onboardingViewModel.onFinish() }
                     )
                 }
 
@@ -80,6 +91,7 @@ fun App(
                 }
 
                 composable(Screen.Login.route) {
+                    val loginViewModel: LoginViewModel = koinViewModel()
                     LoginScreen(
                         viewModel = loginViewModel,
                         onBackClick = { navController.popBackStack() },
@@ -97,6 +109,7 @@ fun App(
                 }
 
                 composable(Screen.Main.route) {
+                    val mainViewModel: MainViewModel = koinViewModel()
                     MainScreen(
                         viewModel = mainViewModel,
                         onProfileClick = {
@@ -105,6 +118,7 @@ fun App(
                     )
                 }
                 composable(Screen.Profile.route) {
+                    val profileViewModel: ProfileViewModel = koinViewModel()
                     ProfileScreen(
                         viewModel = profileViewModel,
                         onLogout = {

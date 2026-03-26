@@ -21,8 +21,10 @@ import com.sweeteri.stepikclient.data.repository.ProfileRepositoryImpl
 import com.sweeteri.stepikclient.domain.usecase.GetCoursesUseCase
 import com.sweeteri.stepikclient.domain.usecase.LoginUseCase
 import com.sweeteri.stepikclient.domain.usecase.LogoutUseCase
+import com.sweeteri.stepikclient.domain.usecase.SetOnboardingShownUseCase
 import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
 import com.sweeteri.stepikclient.presentation.main.MainViewModel
+import com.sweeteri.stepikclient.presentation.onboarding.OnboardingViewModel
 import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
 import com.sweeteri.stepikclient.presentation.start.StartViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -58,9 +60,13 @@ val appModule = module {
     single { GetCoursesUseCase(get()) }
     single { LoginUseCase(get()) }
     single { LogoutUseCase(get()) }
+    single { SetOnboardingShownUseCase(get()) }
+
+
 
     viewModel { MainViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { LoginViewModel(get(), get()) }
     viewModel { StartViewModel(get()) }
+    viewModel { OnboardingViewModel(get()) }
 }

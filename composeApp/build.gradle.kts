@@ -53,6 +53,7 @@ kotlin {
             implementation(libs.accompanist.swiperefresh)
             implementation(libs.room.runtime)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
             implementation(libs.datastore.preferences.core)
 
 
