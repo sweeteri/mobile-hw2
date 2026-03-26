@@ -8,14 +8,12 @@ import com.sweeteri.stepikclient.data.repository.AuthRepositoryImpl
 import com.sweeteri.stepikclient.data.repository.CoursesRepositoryImpl
 import com.sweeteri.stepikclient.data.repository.LoginRepositoryImpl
 import com.sweeteri.stepikclient.data.repository.ProfileRepositoryImpl
-import com.sweeteri.stepikclient.utils.AppContextHolder
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        AppContextHolder.context = applicationContext
         val app = application as MyApplication
 
         val db = app.db
