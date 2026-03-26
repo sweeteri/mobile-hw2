@@ -51,6 +51,8 @@ kotlin {
             implementation(libs.napier)
             implementation(libs.accompanist.swiperefresh)
             implementation(libs.room.runtime)
+            implementation(libs.datastore.preferences.core)
+
 
         }
 

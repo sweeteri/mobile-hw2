@@ -17,6 +17,7 @@ androidx-datastore = "1.0.0"
 accompanist-swiperefresh = "0.28.0"
 ksp = "2.3.1"
 room = "2.7.0"
+datastore-preferences-core = "1.1.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -50,6 +51,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 androidx-datastore = {module  = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore"}
+datastore-preferences-core = {module  = "androidx.datastore:datastore-preferences-core", version.ref = "datastore-preferences-core"}
 accompanist-swiperefresh = {module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist-swiperefresh"}
 room-runtime = {module = "androidx.room:room-runtime", version.ref="room"}
 room-ktx = {module = "androidx.room:room-ktx", version.ref="room"}

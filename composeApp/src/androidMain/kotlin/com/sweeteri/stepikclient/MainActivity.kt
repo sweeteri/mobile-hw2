@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.room.Room
-import com.sweeteri.stepikclient.data.local.AppDatabase
+import com.sweeteri.stepikclient.data.repository.AuthRepositoryImpl
 import com.sweeteri.stepikclient.data.repository.CoursesRepositoryImpl
+import com.sweeteri.stepikclient.data.repository.LoginRepositoryImpl
 import com.sweeteri.stepikclient.data.repository.ProfileRepositoryImpl
 import com.sweeteri.stepikclient.utils.AppContextHolder
 
@@ -16,26 +16,25 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         AppContextHolder.context = applicationContext
+        val app = application as MyApplication
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "app_db"
-        ).build()
-
-        val coursesRepository = CoursesRepositoryImpl(db.courseDao())
-
-        val prefs = createAppPreferences()
+        val db = app.db
+        val prefs = app.prefs
+        val apiClient = app.apiClient
+        val coursesRepository = CoursesRepositoryImpl(db.courseDao(), apiClient)
 
         val profileRepository = ProfileRepositoryImpl(
             prefs = prefs,
             courseDao = db.courseDao()
         )
-
+        val loginRepository = LoginRepositoryImpl(prefs)
+        val authRepository = AuthRepositoryImpl(prefs)
         setContent {
             App(
                 coursesRepository = coursesRepository,
-                profileRepository = profileRepository
+                profileRepository = profileRepository,
+                authRepository = authRepository,
+                loginRepository = loginRepository
             )
         }
     }
