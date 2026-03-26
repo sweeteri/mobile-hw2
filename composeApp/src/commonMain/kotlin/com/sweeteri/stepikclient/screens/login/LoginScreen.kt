@@ -6,18 +6,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sweeteri.stepikclient.AppPreferences
 import com.sweeteri.stepikclient.data.repository.LoginRepositoryImpl
+import com.sweeteri.stepikclient.createAppPreferences
+import com.sweeteri.stepikclient.data.repository.LoginRepository
 
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = viewModel {
-        LoginViewModel(repository = LoginRepositoryImpl())
-    },
+    loginRepository: LoginRepository,
     onRegisterClick: () -> Unit = {},
     onBackClick: () -> Unit,
     onLoginSuccess: () -> Unit
 ) {
+    val viewModel: LoginViewModel = viewModel {
+        LoginViewModel(
+            repository = loginRepository,//TODO: normal login
+        )
+    }
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
