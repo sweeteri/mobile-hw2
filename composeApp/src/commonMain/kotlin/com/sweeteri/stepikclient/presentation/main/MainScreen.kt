@@ -2,7 +2,10 @@ package com.sweeteri.stepikclient.presentation.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -26,11 +29,11 @@ expect fun BackHandlerWithExit()
 @Composable
 fun MainScreen(
     viewModel: MainViewModel,
-    onProfileClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
-
+    val systemBars = WindowInsets.systemBars.asPaddingValues()
+    println("DEBUG MainScreen systemBars top: ${systemBars.calculateTopPadding()} dp")
     BackHandlerWithExit()
 
     LaunchedEffect(listState) {
@@ -45,30 +48,27 @@ fun MainScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        ScreenHeader(stringResource(Res.string.home_title), onProfileClick = onProfileClick)
+        ScreenHeader(stringResource(Res.string.home_title))
 
-        SearchField(
-            query = state.searchQuery,
-            onQueryChange = {
-                viewModel.processIntent(MainIntent.SearchChanged(it))
-            }
-        )
+
         SwipeRefresh(
-            state = rememberSwipeRefreshState(state.isRefreshing),
+            state = rememberSwipeRefreshState(state.listState.isRefreshing),
             onRefresh = { viewModel.processIntent(MainIntent.Refresh) },
             modifier = Modifier.weight(1f)
         ) {
 
             Box(modifier = Modifier.weight(1f)) {
                 CoursesList(
-                    state = state,
+                    items = state.listState.items,
+                    isLoading = state.listState.isLoading,
+                    error = state.listState.error,
                     listState = listState,
                     onRetryPagination = { viewModel.processIntent(MainIntent.LoadNextPage) }
                 )
 
-                if (state.courses.isEmpty()) {
+                if (state.listState.items.isEmpty()) {
                     when {
-                        state.isLoading && !state.isRefreshing -> {
+                        state.listState.isLoading && !state.listState.isRefreshing -> {
                             FullScreenStateOverlay(
                                 isLoading = true,
                                 error = null,
@@ -76,15 +76,15 @@ fun MainScreen(
                             )
                         }
 
-                        state.error != null -> {
+                        state.listState.error != null -> {
                             FullScreenStateOverlay(
                                 isLoading = false,
-                                error = state.error,
+                                error = state.listState.error,
                                 onRetry = { viewModel.processIntent(MainIntent.Refresh) }
                             )
                         }
 
-                        !state.isRefreshing -> {
+                        !state.listState.isRefreshing -> {
                             FullScreenStateOverlay(
                                 isLoading = false,
                                 error = null,

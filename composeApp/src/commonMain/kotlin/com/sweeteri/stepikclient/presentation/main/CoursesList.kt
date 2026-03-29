@@ -11,15 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sweeteri.stepikclient.presentation.common.components.PaginationLoader
+import com.sweeteri.stepikclient.presentation.common.model.CourseUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoursesList(
-    state: MainUiState,
+    items: List<CourseUiModel>,
+    isLoading: Boolean,
+    error: String?,
     listState: LazyListState,
     onRetryPagination: () -> Unit
 ) {
-
     LazyColumn(
         state = listState,
         contentPadding = PaddingValues(16.dp),
@@ -27,17 +29,23 @@ fun CoursesList(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        items(items = state.courses, key = { it.id }) { course ->
+        items(
+            items = items,
+            key = { it.id }
+        ) { course ->
             CourseCard(course)
         }
 
-        if (state.courses.isNotEmpty()) {
-            if (state.isLoading) {
-                item { PaginationLoader() }
-            } else if (state.error != null) {
-                item { PaginationErrorRow(onRetryPagination) }
+        item {
+            when {
+                isLoading -> {
+                    PaginationLoader()
+                }
+
+                error != null -> {
+                    PaginationErrorRow(onRetryPagination)
+                }
             }
         }
     }
 }
-
