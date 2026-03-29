@@ -1,13 +1,8 @@
 package com.sweeteri.stepikclient.presentation.main
 
-import com.sweeteri.stepikclient.data.local.model.Course
+import com.sweeteri.stepikclient.presentation.common.model.CourseUiModel
+import com.sweeteri.stepikclient.presentation.common.state.BaseListState
 
 data class MainUiState(
-    val courses: List<Course> = emptyList(),
-    val isLoading: Boolean = false,
-    val searchQuery: String = "",
-    val isRefreshing: Boolean = false,
-    val error: String? = null,
-    val currentPage: Int = 1,
-    val hasNextPage: Boolean = true
+    val listState: BaseListState<CourseUiModel> = BaseListState()
 )
