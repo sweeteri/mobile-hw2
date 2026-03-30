@@ -1,4 +1,4 @@
-package com.sweeteri.stepikclient.core.pagination
+package com.sweeteri.core.core.pagination
 
 class DefaultPaginator<Key, Item>(
     private val initialKey: Key,

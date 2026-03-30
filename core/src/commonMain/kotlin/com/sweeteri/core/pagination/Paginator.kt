@@ -1,4 +1,4 @@
-package com.sweeteri.stepikclient.core.pagination
+package com.sweeteri.core.core.pagination
 
 interface Paginator<Key, Item> {
     suspend fun loadNext()
