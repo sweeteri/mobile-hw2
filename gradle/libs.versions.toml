@@ -21,6 +21,11 @@ koin = "3.5.0"
 detekt = "1.23.6"
 datastore-preferences-core = "1.1.1"
 koin-compose-viewmodel = "4.2.0"
+kotlinStdlib = "2.3.0"
+runner = "1.7.0"
+core = "1.7.0"
+junitVersion = "1.3.0"
+kotlin-coroutines-core = "1.8.0"
 
 
 [libraries]
@@ -28,7 +33,7 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 junit = { module = "junit:junit", version.ref = "junit" }
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
-
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeMultiplatform" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
@@ -66,7 +71,11 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-compose-viewmodel ={module = "io.insert-koin:koin-compose-viewmodel", version.ref="koin-compose-viewmodel"}
-
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+kotlin-coroutines-core = {module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines-core"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -77,3 +86,5 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+androidLint = { id = "com.android.lint", version.ref = "agp" }

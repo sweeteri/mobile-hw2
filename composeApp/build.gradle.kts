@@ -56,7 +56,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.datastore.preferences.core)
 
-
+            implementation(project(":core"))
         }
 
         androidMain.dependencies {
@@ -115,6 +115,7 @@ dependencies {
     add("kspAndroid", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
+
 }
 
 compose.resources {
