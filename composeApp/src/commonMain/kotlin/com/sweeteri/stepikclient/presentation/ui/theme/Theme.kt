@@ -1,4 +1,4 @@
-package com.sweeteri.stepikclient.presentation.theme
+package com.sweeteri.stepikclient.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

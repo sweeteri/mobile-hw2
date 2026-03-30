@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 import com.sweeteri.stepikclient.generated.resources.Res
 import com.sweeteri.stepikclient.generated.resources.welcome_sign_in_email
 import com.sweeteri.stepikclient.presentation.auth.welcome.StepikLogo
-import com.sweeteri.stepikclient.core.ui.theme.StepikTheme
+import com.sweeteri.stepikclient.presentation.ui.theme.StepikTheme
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

@@ -1,4 +1,4 @@
-package com.sweeteri.core
+package com.sweeteri.stepikclient.presentation.common
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.sweeteri.core.BaseListState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,7 +27,6 @@ fun <T> BaseListScreen(
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
 
-        // Верхний контент (например заголовок)
         topContent?.invoke()
 
         val content: @Composable () -> Unit = {
@@ -37,12 +37,10 @@ fun <T> BaseListScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
 
-                    // Основной список элементов
                     items(listState.items) { item ->
                         itemContent(item)
                     }
 
-                    // Пагинация / ошибка
                     item {
                         when {
                             listState.isLoading -> loaderContent()
@@ -51,14 +49,12 @@ fun <T> BaseListScreen(
                     }
                 }
 
-                // Пустое состояние
                 if (listState.items.isEmpty()) {
                     emptyContent()
                 }
             }
         }
 
-        // Обёртка для pull-to-refresh, если нужно
         if (onRefresh != null) {
             SwipeRefresh(
                 state = rememberSwipeRefreshState(listState.isRefreshing),

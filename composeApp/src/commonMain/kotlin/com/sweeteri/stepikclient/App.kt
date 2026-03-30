@@ -17,13 +17,13 @@ import androidx.navigation.compose.rememberNavController
 import com.sweeteri.stepikclient.presentation.auth.login.LoginScreen
 import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
 import com.sweeteri.stepikclient.presentation.auth.welcome.WelcomeScreen
-import com.sweeteri.stepikclient.core.ui.theme.StepikTheme
 import com.sweeteri.stepikclient.presentation.navigation.MainContainer
 import com.sweeteri.stepikclient.presentation.navigation.Screen
 import com.sweeteri.stepikclient.presentation.onboarding.OnboardingScreen
 import com.sweeteri.stepikclient.presentation.onboarding.OnboardingViewModel
 import com.sweeteri.stepikclient.presentation.start.StartScreen
 import com.sweeteri.stepikclient.presentation.start.StartViewModel
+import com.sweeteri.stepikclient.presentation.ui.theme.StepikTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 
