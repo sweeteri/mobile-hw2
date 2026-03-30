@@ -22,7 +22,7 @@ import com.sweeteri.stepikclient.generated.resources.welcome_more
 import com.sweeteri.stepikclient.presentation.auth.welcome.socialAuth.SocialButton
 import com.sweeteri.stepikclient.presentation.auth.welcome.socialAuth.firstRowSocials
 import com.sweeteri.stepikclient.presentation.auth.welcome.socialAuth.secondRowSocials
-import com.sweeteri.stepikclient.presentation.common.theme.StepikTheme
+import com.sweeteri.stepikclient.core.ui.theme.StepikTheme
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
