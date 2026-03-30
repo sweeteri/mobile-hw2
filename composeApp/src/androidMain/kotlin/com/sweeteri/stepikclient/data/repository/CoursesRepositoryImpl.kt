@@ -6,6 +6,7 @@ import com.sweeteri.stepikclient.data.local.mapper.toEntity
 import com.sweeteri.stepikclient.data.local.model.Course
 import com.sweeteri.stepikclient.data.remote.api.StepikApiClient
 import io.github.aakira.napier.Napier
+import io.ktor.client.plugins.ClientRequestException
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.round
 
@@ -34,13 +35,28 @@ class CoursesRepositoryImpl(
             courseDao.insertAll(updatedCourses.map { it.toEntity() })
 
             Result.success(updatedCourses)
+
+        } catch (e: ClientRequestException) {
+            // ✅ ВАЖНО: 404 = конец списка
+            if (e.response.status.value == 404) {
+                Result.success(emptyList())
+            } else {
+                Result.failure(e)
+            }
         } catch (e: Exception) {
             if (e is CancellationException) throw e
+
             Napier.e("Loading courses failed", e)
 
-            val cached = courseDao.getAll().map { it.toDomain() }
-            if (cached.isNotEmpty()) Result.success(cached)
-            else Result.failure(e)
+            // ❗ fallback ТОЛЬКО для первой страницы
+            if (page == 1) {
+                val cached = courseDao.getAll().map { it.toDomain() }
+                if (cached.isNotEmpty()) Result.success(cached)
+                else Result.failure(e)
+            } else {
+                // ❗ для пагинации НЕ возвращаем кэш
+                Result.failure(e)
+            }
         }
     }
 }

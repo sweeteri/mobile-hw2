@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class StepikResponse(
-    val meta: MetaDto,
+    val meta: MetaDto?=null,
     val courses: List<CourseDto> = emptyList(),
     @SerialName("course-review-summaries")
     val summaries: List<ReviewSummaryDto> = emptyList()

@@ -1,25 +1,24 @@
 package com.sweeteri.stepikclient.presentation.main
 
 import androidx.lifecycle.viewModelScope
-import com.sweeteri.stepikclient.core.BaseViewModel
-import com.sweeteri.stepikclient.core.pagination.DefaultPaginator
 import com.sweeteri.stepikclient.domain.usecase.GetCoursesUseCase
 import com.sweeteri.stepikclient.presentation.common.mapper.toUiModel
-import com.sweeteri.stepikclient.presentation.common.state.BaseListState
+import com.sweeteri.core.BaseListState
+import com.sweeteri.core.BaseViewModel
+import com.sweeteri.core.pagination.DefaultPaginator
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getCoursesUseCase: GetCoursesUseCase
 ) : BaseViewModel<MainUiState, MainIntent>(MainUiState()) {
 
-
     private val paginator = DefaultPaginator(
         initialKey = 1,
         onLoadUpdated = { isLoading ->
             updateState { it.copy(listState = it.listState.copy(isLoading = isLoading)) }
         },
-        onRequest = { nextKey ->
-            getCoursesUseCase(nextKey, "")
+        onRequest = { page, _ ->
+            getCoursesUseCase(page, "")
                 .map { it.map { course -> course.toUiModel() } }
         },
         getNextKey = { page, _ -> page + 1 },
@@ -27,13 +26,14 @@ class MainViewModel(
             updateState { it.copy(listState = it.listState.copy(error = error?.message)) }
         },
         onSuccess = { items, nextPage ->
-            updateState {
-                val updatedItems = it.listState.items + items
-                it.copy(
-                    listState = it.listState.copy(
+            updateState { current ->
+                val updatedItems = current.listState.items + items
+                current.copy(
+                    listState = current.listState.copy(
                         items = updatedItems,
                         page = nextPage,
-                        error = null
+                        error = null,
+                        endReached = items.isEmpty()
                     )
                 )
             }
@@ -52,18 +52,15 @@ class MainViewModel(
     }
 
     private fun loadNext() {
+        if (state.value.listState.endReached) return
         viewModelScope.launch {
-            paginator.loadNext()
+            paginator.loadNext("")
         }
     }
 
     private fun refresh() {
         paginator.reset()
-        updateState {
-            it.copy(
-                listState = BaseListState()
-            )
-        }
+        updateState { it.copy(listState = BaseListState()) }
         loadNext()
     }
 }

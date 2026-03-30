@@ -4,8 +4,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sweeteri.stepikclient.core.BaseListScreen
+import com.sweeteri.stepikclient.presentation.common.BaseListScreen
 import com.sweeteri.stepikclient.presentation.common.components.CourseCard
+import com.sweeteri.stepikclient.presentation.common.components.FullScreenStateOverlay
+import com.sweeteri.stepikclient.presentation.common.components.PaginationErrorRow
+import com.sweeteri.stepikclient.presentation.common.components.PaginationLoader
 import com.sweeteri.stepikclient.presentation.common.extensions.OnBottomReached
 import com.sweeteri.stepikclient.presentation.search.components.SearchField
 import org.koin.compose.viewmodel.koinViewModel
@@ -21,12 +24,12 @@ fun SearchScreen(
         viewModel.processIntent(SearchIntent.LoadNextPage)
     }
 
+
     BaseListScreen(
         listState = state.listState,
         lazyListState = listState,
-        onLoadNext = {
-            viewModel.processIntent(SearchIntent.LoadNextPage)
-        },
+        onLoadNext = { viewModel.processIntent(SearchIntent.LoadNextPage) },
+        onRefresh = { viewModel.processIntent(SearchIntent.Refresh) },
         topContent = {
             SearchField(
                 query = state.query,
@@ -34,8 +37,14 @@ fun SearchScreen(
                     viewModel.processIntent(SearchIntent.QueryChanged(it))
                 }
             )
-        }
-    ) { course ->
-        CourseCard(course)
-    }
+        },
+        itemContent = { CourseCard(it) },
+        loaderContent = { PaginationLoader() },
+        errorContent = { onRetry -> PaginationErrorRow(onRetry) },
+        emptyContent = { FullScreenStateOverlay(
+            isLoading = state.listState.isLoading,
+            error = state.listState.error,
+            onRetry = { viewModel.processIntent(SearchIntent.Refresh) }
+        ) }
+    )
 }

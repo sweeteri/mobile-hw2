@@ -1,11 +1,11 @@
 package com.sweeteri.stepikclient.presentation.search
 
 import androidx.lifecycle.viewModelScope
-import com.sweeteri.stepikclient.core.BaseViewModel
-import com.sweeteri.stepikclient.core.pagination.DefaultPaginator
+import com.sweeteri.core.BaseListState
+import com.sweeteri.core.BaseViewModel
+import com.sweeteri.core.pagination.DefaultPaginator
 import com.sweeteri.stepikclient.domain.usecase.GetCoursesUseCase
 import com.sweeteri.stepikclient.presentation.common.mapper.toUiModel
-import com.sweeteri.stepikclient.presentation.common.state.BaseListState
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -15,33 +15,18 @@ class SearchViewModel(
     private val getCoursesUseCase: GetCoursesUseCase
 ) : BaseViewModel<SearchUiState, SearchIntent>(SearchUiState()) {
 
-
     private val paginator = DefaultPaginator(
         initialKey = 1,
-
         onLoadUpdated = { isLoading ->
-            updateState {
-                it.copy(
-                    listState = it.listState.copy(isLoading = isLoading)
-                )
-            }
+            updateState { it.copy(listState = it.listState.copy(isLoading = isLoading)) }
         },
-
-        onRequest = { page ->
-            getCoursesUseCase(page, _state.value.query)
-                .map { list -> list.map { it.toUiModel() } }
+        onRequest = { page, query ->
+            getCoursesUseCase(page, query).map { list -> list.map { it.toUiModel() } }
         },
-
         getNextKey = { page, _ -> page + 1 },
-
         onError = { error ->
-            updateState {
-                it.copy(
-                    listState = it.listState.copy(error = error?.message)
-                )
-            }
+            updateState { it.copy(listState = it.listState.copy(error = error?.message)) }
         },
-
         onSuccess = { items, nextPage ->
             updateState { current ->
                 current.copy(
@@ -63,16 +48,12 @@ class SearchViewModel(
     override fun processIntent(intent: SearchIntent) {
         when (intent) {
             is SearchIntent.QueryChanged -> {
-                updateState {
-                    it.copy(
-                        query = intent.query,
-                        listState = BaseListState()
-                    )
-                }
-                paginator.reset()
+                // обновляем только query мгновенно
+                updateState { it.copy(query = intent.query) }
             }
 
             SearchIntent.LoadNextPage -> loadNext()
+            SearchIntent.Refresh -> refresh()
         }
     }
 
@@ -82,17 +63,22 @@ class SearchViewModel(
                 .map { it.query }
                 .debounce(500)
                 .distinctUntilChanged()
-                .collect {
-                    loadNext()
+                .collect { query ->
+                    updateState { it.copy(listState = BaseListState()) }
+                    paginator.reset()
+                    loadNext(query)
                 }
         }
     }
 
-    private fun loadNext() {
+    private fun loadNext(query: String = state.value.query) {
         if (state.value.listState.endReached) return
+        viewModelScope.launch { paginator.loadNext(query) }
+    }
 
-        viewModelScope.launch {
-            paginator.loadNext()
-        }
+    private fun refresh() {
+        paginator.reset()
+        updateState { it.copy(listState = BaseListState()) }
+        loadNext()
     }
 }
