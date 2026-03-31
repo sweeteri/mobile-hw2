@@ -108,6 +108,27 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    signingConfigs {
+        create("release") {
+            keyAlias = project.property("RELEASE_KEY_ALIAS") as String
+            keyPassword = project.property("RELEASE_KEY_PASSWORD") as String
+            storeFile = file(project.property("RELEASE_STORE_FILE") as String)
+            storePassword = project.property("RELEASE_STORE_PASSWORD") as String
+        }
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = true  // включаем минификацию
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release") // используем релизную подпись
+        }
+        debug {
+            isMinifyEnabled = false // для дебага минификация отключена
+        }
+    }
 }
 
 dependencies {
@@ -115,7 +136,7 @@ dependencies {
     add("kspAndroid", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
-
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 }
 
 compose.resources {
