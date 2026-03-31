@@ -118,15 +118,15 @@ android {
     }
     buildTypes {
         release {
-            isMinifyEnabled = true  // включаем минификацию
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release") // используем релизную подпись
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
-            isMinifyEnabled = false // для дебага минификация отключена
+            isMinifyEnabled = false
         }
     }
 }
