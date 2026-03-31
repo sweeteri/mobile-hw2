@@ -1,30 +1,44 @@
 package com.sweeteri.stepikclient.presentation.search
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import com.sweeteri.core.UiEvent
 import com.sweeteri.stepikclient.presentation.common.BaseListScreen
 import com.sweeteri.stepikclient.presentation.common.components.CourseCard
 import com.sweeteri.stepikclient.presentation.common.components.FullScreenStateOverlay
 import com.sweeteri.stepikclient.presentation.common.components.PaginationErrorRow
 import com.sweeteri.stepikclient.presentation.common.components.PaginationLoader
 import com.sweeteri.stepikclient.presentation.common.extensions.OnBottomReached
+import com.sweeteri.stepikclient.presentation.navigation.Screen
 import com.sweeteri.stepikclient.presentation.search.components.SearchField
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = koinViewModel()
+    viewModel: SearchViewModel,
+    navController: NavHostController
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
-
     listState.OnBottomReached {
         viewModel.processIntent(SearchIntent.LoadNextPage)
     }
 
-
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                is UiEvent.OpenCourseDetail -> {
+                    val courseIdInt = event.courseId.toIntOrNull() ?: return@collect
+                    navController.navigate(Screen.CourseDetail.createRoute(courseIdInt))
+                }
+            }
+        }
+    }
     BaseListScreen(
         listState = state.listState,
         lazyListState = listState,
@@ -38,7 +52,13 @@ fun SearchScreen(
                 }
             )
         },
-        itemContent = { CourseCard(it) },
+
+        itemContent = { course ->
+            CourseCard(course, modifier = Modifier.clickable {
+                val courseIdInt = course.id.toIntOrNull() ?: return@clickable
+                navController.navigate(Screen.CourseDetail.createRoute(courseIdInt))
+            })
+        },
         loaderContent = { PaginationLoader() },
         errorContent = { onRetry -> PaginationErrorRow(onRetry) },
         emptyContent = { FullScreenStateOverlay(

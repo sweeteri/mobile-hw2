@@ -3,6 +3,7 @@ package com.sweeteri.stepikclient.presentation.search
 import androidx.lifecycle.viewModelScope
 import com.sweeteri.core.BaseListState
 import com.sweeteri.core.BaseViewModel
+import com.sweeteri.core.UiEvent
 import com.sweeteri.core.pagination.DefaultPaginator
 import com.sweeteri.stepikclient.domain.usecase.GetCoursesUseCase
 import com.sweeteri.stepikclient.presentation.common.mapper.toUiModel
@@ -80,5 +81,8 @@ class SearchViewModel(
         paginator.reset()
         updateState { it.copy(listState = BaseListState()) }
         loadNext()
+    }
+    fun onCourseClick(courseId: String) {
+        sendEvent(UiEvent.OpenCourseDetail(courseId))
     }
 }

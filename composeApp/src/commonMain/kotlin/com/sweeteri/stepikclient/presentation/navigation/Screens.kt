@@ -10,4 +10,10 @@ sealed class Screen(val route: String) {
     object Search : Screen("search")
     object Notifications : Screen("notifications")
     object Profile : Screen("profile")
+
+    object CourseDetail {
+        const val route = "course_detail"
+        const val routeWithArg = "$route/{courseId}"
+        fun createRoute(courseId: Int) = "$route/$courseId"
+    }
 }

@@ -11,12 +11,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.sweeteri.stepikclient.presentation.auth.login.LoginScreen
 import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
 import com.sweeteri.stepikclient.presentation.auth.welcome.WelcomeScreen
+import com.sweeteri.stepikclient.presentation.course.CourseDetailScreen
+import com.sweeteri.stepikclient.presentation.course.CourseDetailViewModel
 import com.sweeteri.stepikclient.presentation.navigation.MainContainer
 import com.sweeteri.stepikclient.presentation.navigation.Screen
 import com.sweeteri.stepikclient.presentation.onboarding.OnboardingScreen
@@ -106,6 +110,16 @@ fun App() {
 
                 composable(Screen.MainRoot.route) {
                     MainContainer(rootNavController = navController)
+                }
+                composable(
+                    route = Screen.CourseDetail.routeWithArg,
+                    arguments = listOf(navArgument("courseId") { type = NavType.IntType })
+                ) { backStackEntry ->
+                    val courseId = backStackEntry.arguments?.getInt("courseId") ?: 0
+                    CourseDetailScreen(
+                        courseId = courseId,
+                        onBack = { navController.popBackStack() }
+                    )
                 }
 
             }

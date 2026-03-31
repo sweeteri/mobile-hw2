@@ -29,9 +29,13 @@ import com.sweeteri.stepikclient.presentation.common.model.CourseUiModel
 
 
 @Composable
-fun CourseCard(course: CourseUiModel) {
+fun CourseCard(
+    course: CourseUiModel,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(

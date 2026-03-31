@@ -5,6 +5,7 @@ import com.sweeteri.stepikclient.domain.usecase.GetCoursesUseCase
 import com.sweeteri.stepikclient.presentation.common.mapper.toUiModel
 import com.sweeteri.core.BaseListState
 import com.sweeteri.core.BaseViewModel
+import com.sweeteri.core.UiEvent
 import com.sweeteri.core.pagination.DefaultPaginator
 import kotlinx.coroutines.launch
 
@@ -62,5 +63,8 @@ class MainViewModel(
         paginator.reset()
         updateState { it.copy(listState = BaseListState()) }
         loadNext()
+    }
+    fun onCourseClick(courseId: String) {
+        sendEvent(UiEvent.OpenCourseDetail(courseId))
     }
 }

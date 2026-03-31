@@ -17,6 +17,7 @@ import com.sweeteri.stepikclient.presentation.main.MainViewModel
 import com.sweeteri.stepikclient.presentation.profile.ProfileScreen
 import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
 import com.sweeteri.stepikclient.presentation.search.SearchScreen
+import com.sweeteri.stepikclient.presentation.search.SearchViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -53,7 +54,7 @@ fun MainContainer(rootNavController: NavHostController) {
                 val mainViewModel: MainViewModel = koinViewModel()
                 MainScreen(
                     viewModel = mainViewModel,
-
+                    navController = rootNavController
                     )
             }
 
@@ -70,7 +71,9 @@ fun MainContainer(rootNavController: NavHostController) {
             }
 
             composable(Screen.Search.route) {
-                SearchScreen()
+                val searchViewModel: SearchViewModel = koinViewModel()
+                SearchScreen(viewModel = searchViewModel,
+                    navController = rootNavController)
             }
 
             composable(Screen.Notifications.route) {
