@@ -37,7 +37,6 @@ class CoursesRepositoryImpl(
             Result.success(updatedCourses)
 
         } catch (e: ClientRequestException) {
-            // ✅ ВАЖНО: 404 = конец списка
             if (e.response.status.value == 404) {
                 Result.success(emptyList())
             } else {
@@ -48,13 +47,11 @@ class CoursesRepositoryImpl(
 
             Napier.e("Loading courses failed", e)
 
-            // ❗ fallback ТОЛЬКО для первой страницы
             if (page == 1) {
                 val cached = courseDao.getAll().map { it.toDomain() }
                 if (cached.isNotEmpty()) Result.success(cached)
                 else Result.failure(e)
             } else {
-                // ❗ для пагинации НЕ возвращаем кэш
                 Result.failure(e)
             }
         }
