@@ -1,6 +1,5 @@
 package com.sweeteri.stepikclient.data.repository
 
-
 import com.sweeteri.stepikclient.AppPreferences
 import com.sweeteri.stepikclient.data.local.CourseDao
 import kotlin.coroutines.cancellation.CancellationException

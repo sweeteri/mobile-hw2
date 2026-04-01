@@ -1,0 +1,12 @@
+style:
+  MagicNumber:
+    active: false
+
+naming:
+  FunctionNaming:
+    active: true
+    functionPattern: '[a-z][a-zA-Z0-9]*'
+
+complexity:
+  LongMethod:
+    threshold: 60

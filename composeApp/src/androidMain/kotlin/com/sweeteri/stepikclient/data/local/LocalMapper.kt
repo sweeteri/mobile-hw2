@@ -1,6 +1,6 @@
 package com.sweeteri.stepikclient.data.local
 
-import com.sweeteri.stepikclient.data.model.Course
+import com.sweeteri.stepikclient.data.local.model.Course
 
 fun CourseEntity.toDomain() = Course(
     id = id,

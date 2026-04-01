@@ -9,35 +9,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sweeteri.stepikclient.data.repository.AuthRepository
-import com.sweeteri.stepikclient.data.repository.CoursesRepository
-import com.sweeteri.stepikclient.data.repository.LoginRepository
-import com.sweeteri.stepikclient.data.repository.ProfileRepository
-import com.sweeteri.stepikclient.navigation.Screen
-import com.sweeteri.stepikclient.screens.login.LoginScreen
-import com.sweeteri.stepikclient.screens.main.MainScreen
-import com.sweeteri.stepikclient.screens.main.MainViewModel
-import com.sweeteri.stepikclient.screens.onboarding.OnboardingScreen
-import com.sweeteri.stepikclient.screens.profile.ProfileScreen
-import com.sweeteri.stepikclient.screens.start.StartScreen
-import com.sweeteri.stepikclient.screens.welcome.WelcomeScreen
-import com.sweeteri.stepikclient.ui.theme.StepikTheme
-import kotlinx.coroutines.launch
+import com.sweeteri.stepikclient.presentation.auth.login.LoginScreen
+import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
+import com.sweeteri.stepikclient.presentation.auth.welcome.WelcomeScreen
+import com.sweeteri.stepikclient.presentation.common.theme.StepikTheme
+import com.sweeteri.stepikclient.presentation.main.MainScreen
+import com.sweeteri.stepikclient.presentation.main.MainViewModel
+import com.sweeteri.stepikclient.presentation.navigation.Screen
+import com.sweeteri.stepikclient.presentation.onboarding.OnboardingScreen
+import com.sweeteri.stepikclient.presentation.onboarding.OnboardingViewModel
+import com.sweeteri.stepikclient.presentation.profile.ProfileScreen
+import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
+import com.sweeteri.stepikclient.presentation.start.StartScreen
+import com.sweeteri.stepikclient.presentation.start.StartViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
-fun App(
-    coursesRepository: CoursesRepository,
-    profileRepository: ProfileRepository,
-    authRepository: AuthRepository,
-    loginRepository: LoginRepository
-) {
+fun App() {
     StepikTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -45,11 +40,9 @@ fun App(
         ) {
 
             val navController = rememberNavController()
-
             NavHost(
                 navController = navController,
                 startDestination = Screen.Start.route,
-
                 enterTransition = {
                     slideInHorizontally(tween(500)) { it } + fadeIn(tween(500))
                 },
@@ -64,8 +57,9 @@ fun App(
                 }
             ) {
                 composable(Screen.Start.route) {
+                    val startViewModel: StartViewModel = koinViewModel()
                     StartScreen(
-                        authRepository = authRepository,
+                        viewModel = startViewModel,
                         onNavigate = { route ->
                             navController.navigate(route) {
                                 popUpTo(Screen.Start.route) { inclusive = true }
@@ -73,18 +67,17 @@ fun App(
                         }
                     )
                 }
-
                 composable(Screen.Onboarding.route) {
-                    val scope = rememberCoroutineScope()
-                    OnboardingScreen(
-                        onFinish = {
-                            scope.launch {
-                                authRepository.setOnboardingShown()
-                                navController.navigate(Screen.Login.route) {
-                                    popUpTo(Screen.Onboarding.route) { inclusive = true }
-                                }
+                    val onboardingViewModel: OnboardingViewModel = koinViewModel()
+                    LaunchedEffect(Unit) {
+                        onboardingViewModel.events.collect {
+                            navController.navigate(Screen.Login.route) {
+                                popUpTo(Screen.Onboarding.route) { inclusive = true }
                             }
                         }
+                    }
+                    OnboardingScreen(
+                        onFinish = { onboardingViewModel.onFinish() }
                     )
                 }
 
@@ -98,8 +91,9 @@ fun App(
                 }
 
                 composable(Screen.Login.route) {
+                    val loginViewModel: LoginViewModel = koinViewModel()
                     LoginScreen(
-                        loginRepository = loginRepository,
+                        viewModel = loginViewModel,
                         onBackClick = { navController.popBackStack() },
                         onRegisterClick = {
                             navController.navigate(Screen.Welcome.route) {
@@ -115,17 +109,18 @@ fun App(
                 }
 
                 composable(Screen.Main.route) {
-                    val viewModel: MainViewModel = viewModel {
-                        MainViewModel(coursesRepository)
-                    }
-
+                    val mainViewModel: MainViewModel = koinViewModel()
                     MainScreen(
-                        viewModel = viewModel,
-                        onProfileClick = { navController.navigate(Screen.Profile.route) } // 🔹
+                        viewModel = mainViewModel,
+                        onProfileClick = {
+                            navController.navigate(Screen.Profile.route)
+                        }
                     )
                 }
                 composable(Screen.Profile.route) {
+                    val profileViewModel: ProfileViewModel = koinViewModel()
                     ProfileScreen(
+                        viewModel = profileViewModel,
                         onLogout = {
                             navController.navigate(Screen.Login.route) {
                                 popUpTo(Screen.Main.route) { inclusive = true }
