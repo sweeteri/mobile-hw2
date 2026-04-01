@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:composeApp/src/commonMain/kotlin/com/sweeteri/stepikclient/presentation/ui/theme/Theme.kt
 package com.sweeteri.stepikclient.presentation.ui.theme
+========
+package com.sweeteri.stepikclient.presentation.common.theme
+>>>>>>>> main:composeApp/src/commonMain/kotlin/com/sweeteri/stepikclient/presentation/common/theme/Theme.kt
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

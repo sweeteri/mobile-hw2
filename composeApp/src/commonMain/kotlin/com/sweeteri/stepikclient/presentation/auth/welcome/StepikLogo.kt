@@ -11,6 +11,7 @@ import com.sweeteri.stepikclient.generated.resources.Res
 import com.sweeteri.stepikclient.generated.resources.ic_stepik
 import com.sweeteri.stepikclient.generated.resources.welcome_stepik
 import com.sweeteri.stepikclient.presentation.ui.theme.StepikTheme
+
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

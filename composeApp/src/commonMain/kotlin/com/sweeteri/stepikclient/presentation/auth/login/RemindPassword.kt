@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import com.sweeteri.stepikclient.generated.resources.Res
 import com.sweeteri.stepikclient.generated.resources.login_remind_password
 import com.sweeteri.stepikclient.presentation.ui.theme.StepikTheme
+
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:composeApp/src/commonMain/kotlin/com/sweeteri/stepikclient/presentation/ui/theme/Colour.kt
 package com.sweeteri.stepikclient.presentation.ui.theme
+========
+package com.sweeteri.stepikclient.presentation.common.theme
+>>>>>>>> main:composeApp/src/commonMain/kotlin/com/sweeteri/stepikclient/presentation/common/theme/Colour.kt
 
 import androidx.compose.ui.graphics.Color
 

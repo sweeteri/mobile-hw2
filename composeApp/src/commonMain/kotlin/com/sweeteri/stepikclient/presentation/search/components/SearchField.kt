@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:composeApp/src/commonMain/kotlin/com/sweeteri/stepikclient/presentation/search/components/SearchField.kt
 package com.sweeteri.stepikclient.presentation.search.components
+========
+package com.sweeteri.stepikclient.presentation.main
+>>>>>>>> main:composeApp/src/commonMain/kotlin/com/sweeteri/stepikclient/presentation/main/SearchGrid.kt
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

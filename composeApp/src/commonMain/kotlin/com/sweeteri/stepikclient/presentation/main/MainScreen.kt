@@ -1,5 +1,7 @@
 package com.sweeteri.stepikclient.presentation.main
 
+import CourseCard
+import PaginationErrorRow
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
