@@ -20,7 +20,7 @@ class StartViewModel(private val repository: AuthRepository) : ViewModel() {
 
                 _startDestination.value = when {
                     !onboardingShown -> Screen.Onboarding.route
-                    isLoggedIn -> Screen.Main.route
+                    isLoggedIn -> Screen.MainRoot.route
                     else -> Screen.Welcome.route
                 }
             } catch (e: Exception) {

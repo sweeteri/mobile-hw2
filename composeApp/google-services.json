@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "8489317489",
+    "project_id": "mobile-hw2-13d1a",
+    "storage_bucket": "mobile-hw2-13d1a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8489317489:android:97169bca8d90e2040817d0",
+        "android_client_info": {
+          "package_name": "com.sweeteri.stepikclient"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxQB6hMhzi3GU52fOQK_tJRqepOGl-qz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

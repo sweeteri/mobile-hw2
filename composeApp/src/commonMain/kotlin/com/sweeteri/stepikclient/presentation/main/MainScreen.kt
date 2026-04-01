@@ -1,23 +1,25 @@
 package com.sweeteri.stepikclient.presentation.main
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import androidx.navigation.NavHostController
+import com.sweeteri.core.UiEvent
 import com.sweeteri.stepikclient.generated.resources.Res
 import com.sweeteri.stepikclient.generated.resources.home_title
-import kotlinx.coroutines.flow.distinctUntilChanged
+import com.sweeteri.stepikclient.presentation.common.BaseListScreen
+import com.sweeteri.stepikclient.presentation.common.components.CourseCard
+import com.sweeteri.stepikclient.presentation.common.components.FullScreenStateOverlay
+import com.sweeteri.stepikclient.presentation.common.components.PaginationErrorRow
+import com.sweeteri.stepikclient.presentation.common.components.PaginationLoader
+import com.sweeteri.stepikclient.presentation.common.extensions.OnBottomReached
+import com.sweeteri.stepikclient.presentation.navigation.Screen
 import org.jetbrains.compose.resources.stringResource
-
 
 @Composable
 expect fun BackHandlerWithExit()
@@ -26,74 +28,53 @@ expect fun BackHandlerWithExit()
 @Composable
 fun MainScreen(
     viewModel: MainViewModel,
-    onProfileClick: () -> Unit
+    navController: NavHostController
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
     BackHandlerWithExit()
 
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }
-            .distinctUntilChanged()
-            .collect { lastVisibleItem ->
-                val totalItems = listState.layoutInfo.totalItemsCount
-                if (totalItems > 0 && lastVisibleItem >= totalItems - 5) {
-                    viewModel.processIntent(MainIntent.LoadNextPage)
-                }
-            }
+    listState.OnBottomReached {
+        viewModel.processIntent(MainIntent.LoadNextPage)
     }
-
-    Column(modifier = Modifier.fillMaxSize()) {
-        ScreenHeader(stringResource(Res.string.home_title), onProfileClick = onProfileClick)
-
-        SearchField(
-            query = state.searchQuery,
-            onQueryChange = {
-                viewModel.processIntent(MainIntent.SearchChanged(it))
-            }
-        )
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(state.isRefreshing),
-            onRefresh = { viewModel.processIntent(MainIntent.Refresh) },
-            modifier = Modifier.weight(1f)
-        ) {
-
-            Box(modifier = Modifier.weight(1f)) {
-                CoursesList(
-                    state = state,
-                    listState = listState,
-                    onRetryPagination = { viewModel.processIntent(MainIntent.LoadNextPage) }
-                )
-
-                if (state.courses.isEmpty()) {
-                    when {
-                        state.isLoading && !state.isRefreshing -> {
-                            FullScreenStateOverlay(
-                                isLoading = true,
-                                error = null,
-                                onRetry = {}
-                            )
-                        }
-
-                        state.error != null -> {
-                            FullScreenStateOverlay(
-                                isLoading = false,
-                                error = state.error,
-                                onRetry = { viewModel.processIntent(MainIntent.Refresh) }
-                            )
-                        }
-
-                        !state.isRefreshing -> {
-                            FullScreenStateOverlay(
-                                isLoading = false,
-                                error = null,
-                                onRetry = {}
-                            )
-                        }
-                    }
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                is UiEvent.OpenCourseDetail -> {
+                    val courseIdInt = event.courseId.toIntOrNull() ?: return@collect
+                    navController.navigate(Screen.CourseDetail.createRoute(courseIdInt))
                 }
             }
         }
     }
+
+    BaseListScreen(
+        listState = state.listState,
+        lazyListState = listState,
+        onLoadNext = { viewModel.processIntent(MainIntent.LoadNextPage) },
+        onRefresh = { viewModel.processIntent(MainIntent.Refresh) },
+        topContent = {
+            ScreenHeader(stringResource(Res.string.home_title))
+        },
+        itemContent = { course ->
+            CourseCard(course, modifier = Modifier.clickable {
+                val courseIdInt = course.id.toIntOrNull() ?: return@clickable
+                navController.navigate(Screen.CourseDetail.createRoute(courseIdInt))
+            })
+        },
+        loaderContent = {
+            PaginationLoader()
+        },
+        errorContent = { onRetry ->
+            PaginationErrorRow(onRetry)
+        },
+        emptyContent = {
+            FullScreenStateOverlay(
+                isLoading = state.listState.isLoading,
+                error = state.listState.error,
+                onRetry = { viewModel.processIntent(MainIntent.Refresh) }
+            )
+        }
+    )
 }

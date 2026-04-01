@@ -19,13 +19,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sweeteri.stepikclient.generated.resources.Res
-import com.sweeteri.stepikclient.generated.resources.home_search_empty_message
-import com.sweeteri.stepikclient.generated.resources.home_search_empty_title
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun EmptyStateView() {
+fun EmptyStateView(
+    title: String,
+    message: String
+) {
     Column(
         modifier = Modifier.fillMaxSize().padding(32.dp),
         verticalArrangement = Arrangement.Center,
@@ -41,14 +40,15 @@ fun EmptyStateView() {
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = stringResource(Res.string.home_search_empty_title),
+            text = title,
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
             color = Color.Gray
         )
+        Spacer(Modifier.height(8.dp))
 
         Text(
-            text = stringResource(Res.string.home_search_empty_message),
+            text = message,
             fontSize = 14.sp,
             color = Color.LightGray,
             textAlign = TextAlign.Center

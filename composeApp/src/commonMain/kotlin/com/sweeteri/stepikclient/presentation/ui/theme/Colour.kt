@@ -1,4 +1,4 @@
-package com.sweeteri.stepikclient.presentation.common.theme
+package com.sweeteri.stepikclient.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

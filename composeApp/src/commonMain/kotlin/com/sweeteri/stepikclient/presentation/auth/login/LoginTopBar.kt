@@ -12,7 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sweeteri.stepikclient.presentation.common.theme.StepikTheme
+import com.sweeteri.stepikclient.presentation.ui.theme.StepikTheme
+
 
 @Composable
 fun LoginTopBar(onBackClick: () -> Unit) {

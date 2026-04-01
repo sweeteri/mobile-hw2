@@ -1,104 +1,70 @@
 package com.sweeteri.stepikclient.presentation.main
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sweeteri.stepikclient.domain.usecase.GetCoursesUseCase
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
+import com.sweeteri.stepikclient.presentation.common.mapper.toUiModel
+import com.sweeteri.core.BaseListState
+import com.sweeteri.core.BaseViewModel
+import com.sweeteri.core.UiEvent
+import com.sweeteri.core.pagination.DefaultPaginator
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val getCoursesUseCase: GetCoursesUseCase) : ViewModel() {
+class MainViewModel(
+    private val getCoursesUseCase: GetCoursesUseCase
+) : BaseViewModel<MainUiState, MainIntent>(MainUiState()) {
 
-    private val _state = MutableStateFlow(MainUiState())
-    val state = _state.asStateFlow()
-    private var fetchJob: Job? = null
+    private val paginator = DefaultPaginator(
+        initialKey = 1,
+        onLoadUpdated = { isLoading ->
+            updateState { it.copy(listState = it.listState.copy(isLoading = isLoading)) }
+        },
+        onRequest = { page, _ ->
+            getCoursesUseCase(page, "")
+                .map { it.map { course -> course.toUiModel() } }
+        },
+        getNextKey = { page, _ -> page + 1 },
+        onError = { error ->
+            updateState { it.copy(listState = it.listState.copy(error = error?.message)) }
+        },
+        onSuccess = { items, nextPage ->
+            updateState { current ->
+                val updatedItems = current.listState.items + items
+                current.copy(
+                    listState = current.listState.copy(
+                        items = updatedItems,
+                        page = nextPage,
+                        error = null,
+                        endReached = items.isEmpty()
+                    )
+                )
+            }
+        }
+    )
 
     init {
-        setupSearch()
+        loadNext()
     }
 
-    fun processIntent(intent: MainIntent) {
+    override fun processIntent(intent: MainIntent) {
         when (intent) {
-            is MainIntent.SearchChanged -> {
-                _state.update { it.copy(searchQuery = intent.query) }
-            }
-
-            MainIntent.LoadNextPage -> {
-                loadNextPageInternal()
-            }
-
-            MainIntent.Refresh -> {
-                resetAndLoad(_state.value.searchQuery)
-            }
+            MainIntent.LoadNextPage -> loadNext()
+            MainIntent.Refresh -> refresh()
         }
     }
 
-    @OptIn(FlowPreview::class)
-    private fun setupSearch() {
+    private fun loadNext() {
+        if (state.value.listState.endReached) return
         viewModelScope.launch {
-            state
-                .map { it.searchQuery }
-                .debounce(500)
-                .distinctUntilChanged()
-                .collect { query ->
-                    resetAndLoad(query)
-                }
+            paginator.loadNext("")
         }
     }
 
-    private fun resetAndLoad(query: String) {
-        fetchJob?.cancel()
-
-        _state.update {
-            it.copy(
-                courses = emptyList(),
-                currentPage = 1,
-                hasNextPage = true,
-                error = null,
-                isLoading = false,
-                isRefreshing = true
-            )
-        }
-
-        loadNextPageInternal(query, isRefresh = true)
+    private fun refresh() {
+        paginator.reset()
+        updateState { it.copy(listState = BaseListState()) }
+        loadNext()
     }
-
-    fun loadNextPageInternal(
-        query: String = _state.value.searchQuery,
-        isRefresh: Boolean = false
-    ) {
-        val currentState = _state.value
-        if (currentState.isLoading || !currentState.hasNextPage || fetchJob?.isActive == true) return
-
-        fetchJob = viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, error = null) }
-            getCoursesUseCase(currentState.currentPage, query)
-                .onSuccess { courses ->
-                    _state.update { actual ->
-                        actual.copy(
-                            courses = actual.courses + courses,
-                            currentPage = actual.currentPage + 1,
-                            hasNextPage = courses.isNotEmpty(),
-                            isLoading = false,
-                            isRefreshing = if (isRefresh) false else actual.isRefreshing
-                        )
-                    }
-                }
-                .onFailure { error ->
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            isRefreshing = false,
-                            error = error.message
-                        )
-                    }
-                }
-        }
+    fun onCourseClick(courseId: String) {
+        sendEvent(UiEvent.OpenCourseDetail(courseId))
     }
 }

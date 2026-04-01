@@ -1,4 +1,4 @@
-package com.sweeteri.stepikclient.presentation.main
+package com.sweeteri.stepikclient.presentation.common.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,26 +25,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.sweeteri.stepikclient.data.local.model.Course
-import kotlin.math.round
-
-fun formatLearners(count: Int): String {
-    return when {
-        count >= 1000 -> {
-            val thousands = count / 1000.0
-            val rounded = round(thousands * 10) / 10.0
-            "${rounded}k"
-        }
-
-        else -> count.toString()
-    }
-}
+import com.sweeteri.stepikclient.presentation.common.model.CourseUiModel
 
 
 @Composable
-fun CourseCard(course: Course) {
+fun CourseCard(
+    course: CourseUiModel,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(
@@ -83,25 +74,26 @@ fun CourseCard(course: Course) {
                         Icons.Default.Star,
                         contentDescription = null,
                         modifier = Modifier.size(14.dp),
-                        tint = if (course.average > 0) Color.Yellow else Color.Gray
+                        tint = if (course.average != "—") Color.Yellow else Color.Gray
                     )
                     Text(
-                        text = if (course.average > 0) " ${course.average}" else " —",
+                        text = " ${course.average}",
                         style = MaterialTheme.typography.labelMedium,
-                        color = if (course.average > 0) Color.Unspecified else Color.Gray
+                        color = if (course.average != "—") Color.Unspecified else Color.Gray
                     )
+
                     Spacer(Modifier.width(8.dp))
+
                     Icon(
                         Icons.Default.Person,
                         contentDescription = null,
                         modifier = Modifier.size(14.dp)
                     )
                     Text(
-                        text = " ${formatLearners(course.learnersCount)}",
+                        text = " ${course.learners}",
                         style = MaterialTheme.typography.labelMedium
                     )
                 }
-
             }
         }
     }

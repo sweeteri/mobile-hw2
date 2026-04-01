@@ -10,24 +10,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.sweeteri.stepikclient.presentation.auth.login.LoginScreen
 import com.sweeteri.stepikclient.presentation.auth.login.LoginViewModel
 import com.sweeteri.stepikclient.presentation.auth.welcome.WelcomeScreen
-import com.sweeteri.stepikclient.presentation.common.theme.StepikTheme
-import com.sweeteri.stepikclient.presentation.main.MainScreen
-import com.sweeteri.stepikclient.presentation.main.MainViewModel
+import com.sweeteri.stepikclient.presentation.course.CourseDetailScreen
+import com.sweeteri.stepikclient.presentation.navigation.MainContainer
 import com.sweeteri.stepikclient.presentation.navigation.Screen
 import com.sweeteri.stepikclient.presentation.onboarding.OnboardingScreen
 import com.sweeteri.stepikclient.presentation.onboarding.OnboardingViewModel
-import com.sweeteri.stepikclient.presentation.profile.ProfileScreen
-import com.sweeteri.stepikclient.presentation.profile.ProfileViewModel
 import com.sweeteri.stepikclient.presentation.start.StartScreen
 import com.sweeteri.stepikclient.presentation.start.StartViewModel
+import com.sweeteri.stepikclient.presentation.ui.theme.StepikTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -101,33 +100,27 @@ fun App() {
                             }
                         },
                         onLoginSuccess = {
-                            navController.navigate(Screen.Main.route) {
+                            navController.navigate(Screen.MainRoot.route) {
                                 popUpTo(Screen.Login.route) { inclusive = true }
                             }
                         }
                     )
                 }
 
-                composable(Screen.Main.route) {
-                    val mainViewModel: MainViewModel = koinViewModel()
-                    MainScreen(
-                        viewModel = mainViewModel,
-                        onProfileClick = {
-                            navController.navigate(Screen.Profile.route)
-                        }
+                composable(Screen.MainRoot.route) {
+                    MainContainer(rootNavController = navController)
+                }
+                composable(
+                    route = Screen.CourseDetail.routeWithArg,
+                    arguments = listOf(navArgument("courseId") { type = NavType.IntType })
+                ) { backStackEntry ->
+                    val courseId = backStackEntry.arguments?.getInt("courseId") ?: 0
+                    CourseDetailScreen(
+                        courseId = courseId,
+                        onBack = { navController.popBackStack() }
                     )
                 }
-                composable(Screen.Profile.route) {
-                    val profileViewModel: ProfileViewModel = koinViewModel()
-                    ProfileScreen(
-                        viewModel = profileViewModel,
-                        onLogout = {
-                            navController.navigate(Screen.Login.route) {
-                                popUpTo(Screen.Main.route) { inclusive = true }
-                            }
-                        }
-                    )
-                }
+
             }
         }
     }

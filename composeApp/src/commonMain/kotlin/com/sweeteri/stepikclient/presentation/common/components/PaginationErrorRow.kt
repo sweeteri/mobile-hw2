@@ -1,4 +1,4 @@
-package com.sweeteri.stepikclient.presentation.main
+package com.sweeteri.stepikclient.presentation.common.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

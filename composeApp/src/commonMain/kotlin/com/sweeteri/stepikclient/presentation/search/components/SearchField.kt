@@ -1,4 +1,4 @@
-package com.sweeteri.stepikclient.presentation.main
+package com.sweeteri.stepikclient.presentation.search.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,14 +16,18 @@ import com.sweeteri.stepikclient.generated.resources.home_search_hint
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun SearchField(query: String, onQueryChange: (String) -> Unit) {
+fun SearchField(
+    query: String,
+    onQueryChange: (String) -> Unit
+) {
     OutlinedTextField(
         value = query,
         onValueChange = onQueryChange,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp),
         placeholder = { Text(stringResource(Res.string.home_search_hint)) },
-        leadingIcon = { Icon(Icons.Default.Search, null) },
+        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
         singleLine = true,
         shape = RoundedCornerShape(12.dp)
     )

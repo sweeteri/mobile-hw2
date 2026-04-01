@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 kotlin {
@@ -56,7 +58,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.datastore.preferences.core)
 
-
+            implementation(project(":core"))
         }
 
         androidMain.dependencies {
@@ -108,6 +110,27 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    signingConfigs {
+        create("release") {
+            keyAlias = project.property("RELEASE_KEY_ALIAS") as String
+            keyPassword = project.property("RELEASE_KEY_PASSWORD") as String
+            storeFile = file(project.property("RELEASE_STORE_FILE") as String)
+            storePassword = project.property("RELEASE_STORE_PASSWORD") as String
+        }
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            isMinifyEnabled = false
+        }
+    }
 }
 
 dependencies {
@@ -115,6 +138,9 @@ dependencies {
     add("kspAndroid", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
+    debugImplementation(libs.leakcanary)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
 }
 
 compose.resources {

@@ -1,6 +1,7 @@
 package com.sweeteri.stepikclient.presentation.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,27 +12,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sweeteri.stepikclient.generated.resources.Res
-import com.sweeteri.stepikclient.generated.resources.profile_title
 import com.sweeteri.stepikclient.generated.resources.profile_authorized_status
 import com.sweeteri.stepikclient.generated.resources.profile_edit_button
 import com.sweeteri.stepikclient.generated.resources.profile_logout_button
 import com.sweeteri.stepikclient.generated.resources.profile_test_name
+import com.sweeteri.stepikclient.generated.resources.profile_title
 import org.jetbrains.compose.resources.stringResource
-import com.sweeteri.stepikclient.domain.usecase.LogoutUseCase
-import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.compose.runtime.getValue
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.CircularProgressIndicator
 
 @Composable
 fun ProfileScreen(
@@ -53,7 +52,7 @@ fun ProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+
         ) {
             Text(
                 stringResource(Res.string.profile_title),

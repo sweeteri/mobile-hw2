@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.sweeteri.stepikclient.generated.resources.Res
 import com.sweeteri.stepikclient.generated.resources.login_label
 import com.sweeteri.stepikclient.generated.resources.login_password_label
-import com.sweeteri.stepikclient.presentation.common.theme.StepikTheme
+import com.sweeteri.stepikclient.presentation.ui.theme.StepikTheme
+
 import org.jetbrains.compose.resources.stringResource
 
 
