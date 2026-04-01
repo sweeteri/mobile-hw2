@@ -1,7 +1,5 @@
 package com.sweeteri.stepikclient.presentation.main
 
-import CourseCard
-import PaginationErrorRow
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,11 +9,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.sweeteri.core.UiEvent
-import com.sweeteri.stepikclient.presentation.common.BaseListScreen
 import com.sweeteri.stepikclient.generated.resources.Res
 import com.sweeteri.stepikclient.generated.resources.home_title
+import com.sweeteri.stepikclient.presentation.common.BaseListScreen
 import com.sweeteri.stepikclient.presentation.common.components.CourseCard
 import com.sweeteri.stepikclient.presentation.common.components.FullScreenStateOverlay
 import com.sweeteri.stepikclient.presentation.common.components.PaginationErrorRow
