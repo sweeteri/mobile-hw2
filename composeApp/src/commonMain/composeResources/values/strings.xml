@@ -47,4 +47,59 @@
     <string name="profile_edit_button">Edit Profile</string>
     <string name="profile_logout_button">Logout</string>
     <string name="profile_test_name">Name Surname</string>
+
+    <string name="detailscreen_month_1">January</string>
+    <string name="detailscreen_month_2">February</string>
+    <string name="detailscreen_month_3">March</string>
+    <string name="detailscreen_month_4">April</string>
+    <string name="detailscreen_month_5">May</string>
+    <string name="detailscreen_month_6">June</string>
+    <string name="detailscreen_month_7">July</string>
+    <string name="detailscreen_month_8">August</string>
+    <string name="detailscreen_month_9">September</string>
+    <string name="detailscreen_month_10">October</string>
+    <string name="detailscreen_month_11">November</string>
+    <string name="detailscreen_month_12">December</string>
+
+    <string name="detailscreen_out_of_5">out of 5</string>
+    <string name="detailscreen_reviews_count">%1$d reviews</string>
+
+    <string name="detailscreen_reviews_empty">No reviews</string>
+
+    <string name="detailscreen_back">Back</string>
+    <string name="detailscreen_favorite">Favorite</string>
+    <string name="detailscreen_menu">Menu</string>
+
+    <string name="detailscreen_tab_info">Info</string>
+    <string name="detailscreen_tab_reviews">Reviews</string>
+    <string name="detailscreen_tab_syllabus">Syllabus</string>
+
+    <string name="detailscreen_button_continue">Continue</string>
+    <string name="detailscreen_button_enroll">Enroll</string>
+    <string name="detailscreen_lessons_count">%1$d lessons</string>
+    <string name="detailscreen_learners_count">%1$d learners</string>
+
+    <string name="detailscreen_summary">Summary</string>
+    <string name="detailscreen_description">Description</string>
+    <string name="detailscreen_skills">Skills you will gain</string>
+    <string name="detailscreen_requirements">Requirements</string>
+    <string name="detailscreen_target_audience">Target audience</string>
+    <string name="detailscreen_authors">Authors</string>
+    <string name="detailscreen_course_info">Course info</string>
+
+    <string name="detailscreen_duration">Duration: %1$s</string>
+    <string name="detailscreen_lessons">Lessons:  %1$s</string>
+    <string name="detailscreen_language">Language:  %1$s</string>
+
+    <string name="detailscreen_price">Price:  %1$s</string>
+
+    <string name="detailscreen_certificate_available">Certificate: Available</string>
+    <string name="detailscreen_certificate_not_available">Certificate: Not available</string>
+    <string name="detailscreen_certificate_from">Certificate: from  %1$s points</string>
+    <string name="detailscreen_certificate_distinction">With distinction: from  %1$s points</string>
+
+    <string name="detailscreen_free">Free</string>
+    <string name="detailscreen_paid">Paid</string>
+    <string name="detailscreen_lesson_time">≈ %1$d min</string>
+
 </resources>
