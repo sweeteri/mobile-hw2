@@ -9,9 +9,26 @@ data class StepikResponse<T>(
     val courses: List<T> = emptyList(),
 
     @SerialName("course-review-summaries")
+    val summaries: List<T> = emptyList()
+)
+@Serializable
+data class StepikReviewSummaryDetailedResponse(
+    val meta: MetaDto? = null,
+    @SerialName("course-review-summaries")
+    val summaries: List<CourseReviewSummaryDto> = emptyList()
+)
+@Serializable
+data class StepikReviewSummaryResponse(
+    val meta: MetaDto? = null,
+    @SerialName("course-review-summaries")
     val summaries: List<ReviewSummaryDto> = emptyList()
 )
-
+@Serializable
+data class StepikReviewSummaryShortResponse(
+    val meta: MetaDto? = null,
+    @SerialName("course-review-summaries")
+    val summaries: List<ReviewSummaryDto> = emptyList()
+)
 @Serializable
 data class SectionsResponse(
     val sections: List<SectionDto>
@@ -59,6 +76,7 @@ data class CourseDetailDto(
     val id: Int,
     val title: String,
     val summary: String? = null,
+    val description: String? = null,
     val cover: String? = null,
 
     @SerialName("review_summary")
@@ -70,7 +88,43 @@ data class CourseDetailDto(
     @SerialName("total_units")
     val totalUnits: Int? = 0,
 
-    val sections: List<Int> = emptyList()
+    val sections: List<Int> = emptyList(),
+    @SerialName("authors")
+    val authors: List<Int> = emptyList(),
+    val requirements: String? = null,
+    @SerialName("target_audience")
+    val targetAudience: String? = null,
+    @SerialName("acquired_skills")
+    val acquiredSkills: List<String>? = null,
+
+    @SerialName("quizzes_count")
+    val quizzesCount: Int? = null,
+    @SerialName("display_price")
+    val displayPrice: String? = null,
+    @SerialName("is_paid")
+    val isPaid: Boolean? = null,
+    @SerialName("time_to_complete")
+    val timeToComplete: Int = 0,
+    @SerialName("is_certificate_issued")
+    val isCertificateIssued: Boolean? = null,
+
+    @SerialName("certificate_regular_threshold")
+    val certificateRegularThreshold: Int? = null,
+
+    @SerialName("certificate_distinction_threshold")
+    val certificateDistinctionThreshold: Int? = null,
+
+    val difficulty: String? = null,
+
+    @SerialName("learning_format")
+    val learningFormat: String? = null,
+
+    val language: String? = null,
+    @SerialName("price")
+    val price: Double? = null,
+
+    @SerialName("currency_code")
+    val currencyCode: String? = null,
 )
 
 @Serializable
@@ -83,7 +137,6 @@ data class SectionDto(
 @Serializable
 data class UnitDto(
     val id: Int,
-
     @SerialName("lesson")
     val lessonId: Int? = null
 )
@@ -92,6 +145,10 @@ data class UnitDto(
 data class LessonDto(
     val id: Int,
     val title: String? = null,
+    @SerialName("cover_url") val coverUrl: String? = null,
+    @SerialName("time_to_complete") val timeToComplete: Int = 0,
+    @SerialName("passed_by") val passedBy: Int = 0,
+    @SerialName("vote_delta") val voteDelta: Int = 0
 )
 
 @Serializable
@@ -99,5 +156,39 @@ data class CourseReviewSummaryDto(
     val id: Int,
     val course: Int,
     val average: Double,
-    @SerialName("review_count") val reviewCount: Int
+    @SerialName("count") val reviewCount: Int,
+    val distribution: List<Int>
+)
+
+@Serializable
+data class UsersResponse(
+    val meta: MetaDto? = null,
+    val users: List<UserDto> = emptyList()
+)
+
+@Serializable
+data class UserDto(
+    val id: Int,
+    @SerialName("first_name") val firstName: String,
+    @SerialName("last_name") val lastName: String,
+    @SerialName("avatar") val avatar: String? = null
+) {
+    val fullName: String
+        get() = "$firstName $lastName"
+}
+@Serializable
+data class CourseReviewsResponse(
+    @SerialName("course-reviews")
+    val courseReviews: List<CourseReviewDto> = emptyList()
+)
+
+@Serializable
+data class CourseReviewDto(
+    val id: Int,
+    val course: Int,
+    val user: Int,
+    val score: Int,
+    val text: String? = null,
+    @SerialName("create_date") val createDate: String,
+    @SerialName("vote_delta") val voteDelta: Int
 )
