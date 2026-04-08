@@ -13,14 +13,16 @@ import com.sweeteri.stepikclient.theme.AppTypography
 data class StepikColors(
     val textFieldBackground: Color,
     val textSecondary: Color,
-    val accent: Color
+    val accent: Color,
+    val avatarColors: List<Color>
 )
 
 val LocalStepikColors = compositionLocalOf {
     StepikColors(
         textFieldBackground = Color.Unspecified,
         textSecondary = Color.Unspecified,
-        accent = Color.Unspecified
+        accent = Color.Unspecified,
+        avatarColors = emptyList()
     )
 }
 
@@ -28,7 +30,6 @@ private val LightColors = lightColorScheme(
     primary = Color.White,
     background = LightBackground,
     surface = LightSurface,
-
     onPrimary = Color.Black,
     onBackground = Color.Black,
     onSurface = Color.Black
@@ -38,7 +39,6 @@ private val DarkColors = darkColorScheme(
     primary = Color.White,
     background = DarkBackground,
     surface = DarkSurface,
-
     onPrimary = Color.Black,
     onBackground = Color.White,
     onSurface = Color.White
@@ -55,13 +55,15 @@ fun StepikTheme(
         StepikColors(
             textFieldBackground = DarkTextFieldBackground,
             textSecondary = DarkTextSecondary,
-            accent = StepikGreen
+            accent = StepikGreen,
+            avatarColors = AvatarColors
         )
     } else {
         StepikColors(
             textFieldBackground = LightTextFieldBackground,
             textSecondary = LightTextSecondary,
-            accent = StepikGreen
+            accent = StepikGreen,
+            avatarColors = AvatarColors
         )
     }
 
