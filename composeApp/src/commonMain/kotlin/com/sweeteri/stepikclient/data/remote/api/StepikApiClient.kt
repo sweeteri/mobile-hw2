@@ -7,12 +7,10 @@ import com.sweeteri.stepikclient.data.remote.dto.CourseReviewSummaryDto
 import com.sweeteri.stepikclient.data.remote.dto.CourseReviewsResponse
 import com.sweeteri.stepikclient.data.remote.dto.LessonDto
 import com.sweeteri.stepikclient.data.remote.dto.LessonsResponse
-import com.sweeteri.stepikclient.data.remote.dto.MetaDto
 import com.sweeteri.stepikclient.data.remote.dto.SectionDto
 import com.sweeteri.stepikclient.data.remote.dto.SectionsResponse
 import com.sweeteri.stepikclient.data.remote.dto.StepikResponse
 import com.sweeteri.stepikclient.data.remote.dto.StepikReviewSummaryDetailedResponse
-import com.sweeteri.stepikclient.data.remote.dto.StepikReviewSummaryResponse
 import com.sweeteri.stepikclient.data.remote.dto.UnitDto
 import com.sweeteri.stepikclient.data.remote.dto.UnitsResponse
 import com.sweeteri.stepikclient.data.remote.dto.UserDto

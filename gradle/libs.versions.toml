@@ -32,6 +32,7 @@ firebase-bom = "32.7.0"
 leakcanary = "2.14"
 jsoup = "1.16.1"
 
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -85,6 +86,7 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 jsoup = {module = "org.jsoup:jsoup", version.ref="jsoup" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

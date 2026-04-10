@@ -2,7 +2,6 @@ package com.sweeteri.stepikclient.data.local.model
 
 import androidx.compose.runtime.Immutable
 import com.sweeteri.stepikclient.data.remote.dto.CourseReviewSummaryDto
-import kotlinx.serialization.Serializable
 
 
 @Immutable

@@ -60,6 +60,7 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
             implementation(project(":core"))
             implementation(libs.jsoup)
+
         }
 
         androidMain.dependencies {

@@ -1,7 +1,6 @@
 package com.sweeteri.stepikclient.data.repository
 
 import com.sweeteri.stepikclient.data.local.model.CourseDetail
-import com.sweeteri.stepikclient.data.local.model.CourseReview
 import com.sweeteri.stepikclient.data.local.model.ReviewPage
 
 interface CourseDetailRepository {
