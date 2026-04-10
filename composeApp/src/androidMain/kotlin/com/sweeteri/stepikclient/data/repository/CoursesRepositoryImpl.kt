@@ -5,6 +5,7 @@ import com.sweeteri.stepikclient.data.local.mapper.toDomain
 import com.sweeteri.stepikclient.data.local.mapper.toEntity
 import com.sweeteri.stepikclient.data.local.model.Course
 import com.sweeteri.stepikclient.data.remote.api.StepikApiClient
+import com.sweeteri.stepikclient.data.remote.dto.CourseReviewSummaryDto
 import io.github.aakira.napier.Napier
 import io.ktor.client.plugins.ClientRequestException
 import kotlin.coroutines.cancellation.CancellationException
@@ -22,8 +23,8 @@ class CoursesRepositoryImpl(
 
             val summaryIds = courses.mapNotNull { it.reviewSummaryId }
             val ratingMap = if (summaryIds.isNotEmpty()) {
-                val reviewsResponse = apiClient.getCourseReviews(summaryIds)
-                reviewsResponse.summaries.associate { it.id to it.average }
+                val reviewsResponse: List<CourseReviewSummaryDto> = apiClient.getCourseReviewsSummaries(summaryIds)
+                reviewsResponse.associate { it.id to it.average }
             } else emptyMap()
 
             val updatedCourses = courses.map { dto ->

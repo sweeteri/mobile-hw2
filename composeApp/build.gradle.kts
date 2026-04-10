@@ -57,8 +57,10 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.datastore.preferences.core)
-
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
             implementation(project(":core"))
+            implementation(libs.jsoup)
+
         }
 
         androidMain.dependencies {

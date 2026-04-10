@@ -4,14 +4,17 @@ import com.sweeteri.stepikclient.data.remote.client.NetworkClient
 import com.sweeteri.stepikclient.data.remote.dto.CourseDetailDto
 import com.sweeteri.stepikclient.data.remote.dto.CourseDto
 import com.sweeteri.stepikclient.data.remote.dto.CourseReviewSummaryDto
+import com.sweeteri.stepikclient.data.remote.dto.CourseReviewsResponse
 import com.sweeteri.stepikclient.data.remote.dto.LessonDto
 import com.sweeteri.stepikclient.data.remote.dto.LessonsResponse
-import com.sweeteri.stepikclient.data.remote.dto.MetaDto
 import com.sweeteri.stepikclient.data.remote.dto.SectionDto
 import com.sweeteri.stepikclient.data.remote.dto.SectionsResponse
 import com.sweeteri.stepikclient.data.remote.dto.StepikResponse
+import com.sweeteri.stepikclient.data.remote.dto.StepikReviewSummaryDetailedResponse
 import com.sweeteri.stepikclient.data.remote.dto.UnitDto
 import com.sweeteri.stepikclient.data.remote.dto.UnitsResponse
+import com.sweeteri.stepikclient.data.remote.dto.UserDto
+import com.sweeteri.stepikclient.data.remote.dto.UsersResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -22,6 +25,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import kotlin.math.round
 
 class StepikApiClient(private val client: HttpClient = NetworkClient.httpClient) {
     suspend fun getCourses(page: Int, query: String = ""): StepikResponse<CourseDto> {
@@ -36,23 +40,32 @@ class StepikApiClient(private val client: HttpClient = NetworkClient.httpClient)
         }.body()
     }
 
-    suspend fun getCourseReviews(summaryIds: List<Int>): StepikResponse<CourseDto> {
-        return if (summaryIds.isEmpty()) {
-            StepikResponse(
-                meta = MetaDto(
-                    page = 1,
-                    hasNext = false,
-                    hasPrevious = false,
+    suspend fun getCourseReviewsSummaries(summaryIds: List<Int>): List<CourseReviewSummaryDto> {
+        if (summaryIds.isEmpty()) return emptyList()
 
-                    ), courses = emptyList(), summaries = emptyList()
-            )
-        } else {
-            client.get("https://stepik.org/api/course-review-summaries") {
-                summaryIds.forEach { id ->
-                    parameter("ids[]", id)
-                }
+        return try {
+            val response: StepikReviewSummaryDetailedResponse = client.get(
+                "https://stepik.org/api/course-review-summaries"
+            ) {
+                summaryIds.forEach { parameter("ids[]", it) }
             }.body()
+
+            response.summaries.map { dto ->
+                dto.copy(average = round(dto.average * 10) / 10.0)
+            }
+        } catch (e: Exception) {
+            println("Failed to load course review summaries: $e")
+            emptyList()
         }
+    }
+    suspend fun getCourseReviewsPage(
+        courseId: Int,
+        page: Int = 1
+    ): CourseReviewsResponse {
+        return client.get("https://stepik.org/api/course-reviews") {
+            parameter("course", courseId)
+            parameter("page", page)
+        }.body()
     }
 
     suspend fun getCourse(courseId: Int): CourseDetailDto {
@@ -102,19 +115,19 @@ class StepikApiClient(private val client: HttpClient = NetworkClient.httpClient)
         return allLessons
     }
 
-    suspend fun getCourseReviewSummary(courseId: Int): CourseReviewSummaryDto? {
+    suspend fun getCourseReviewSummary(summaryId: Int): CourseReviewSummaryDto? {
         return try {
-            val response: HttpResponse = client.get(
-                "https://stepik.org/api/course-review-summaries/$courseId"
-            )
+            val response: StepikReviewSummaryDetailedResponse = client.get(
+                "https://stepik.org/api/course-review-summaries"
+            ) {
+                parameter("ids[]", summaryId)
+            }.body()
 
-            if (!response.status.isSuccess()) {
-                return null
+            response.summaries.firstOrNull()?.let { dto ->
+                dto.copy(average = round(dto.average * 10) / 10.0)
             }
-
-            response.body()
-
         } catch (e: Exception) {
+            println("Failed to load course review summary for ID $summaryId: $e")
             null
         }
     }
@@ -125,5 +138,15 @@ class StepikApiClient(private val client: HttpClient = NetworkClient.httpClient)
             setBody(mapOf("course" to courseId, "user" to userId))
         }
         return response.status.isSuccess()
+    }
+
+    suspend fun getUsers(ids: List<Int>): List<UserDto> {
+        if (ids.isEmpty()) return emptyList()
+
+        val response: UsersResponse = client.get("https://stepik.org/api/users") {
+            ids.forEach { parameter("ids[]", it) }
+        }.body()
+
+        return response.users
     }
 }

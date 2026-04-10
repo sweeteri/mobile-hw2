@@ -30,6 +30,7 @@ google-services = "4.4.0"
 firebase-crashlytics-plugin = "2.9.9"
 firebase-bom = "32.7.0"
 leakcanary = "2.14"
+jsoup = "1.16.1"
 
 
 [libraries]
@@ -84,6 +85,7 @@ kotlin-coroutines-core = {module = "org.jetbrains.kotlinx:kotlinx-coroutines-cor
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
+jsoup = {module = "org.jsoup:jsoup", version.ref="jsoup" }
 
 
 [plugins]

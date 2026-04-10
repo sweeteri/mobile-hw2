@@ -41,9 +41,63 @@
     <string name="onboarding_desc_platform">Учитесь в удобном темпе с любого устройства, сохраняйте прогресс и получайте обратную связь</string>
     <string name="onboarding_desc_courses">Интерактивные задания, тесты и видео-лекции от ведущих преподавателей и университетов</string>
     <string name="onboarding_desc_certificates">Подтверждайте свои знания официальными сертификатами после успешного прохождения курсов</string>
+
     <string name="profile_title">Профиль</string>
     <string name="profile_authorized_status">Вы авторизованы</string>
     <string name="profile_edit_button">Редактировать профиль</string>
     <string name="profile_logout_button">Выйти</string>
     <string name="profile_test_name">Имя Фамилия</string>
+
+    <string name="detailscreen_month_1">января</string>
+    <string name="detailscreen_month_2">февраля</string>
+    <string name="detailscreen_month_3">марта</string>
+    <string name="detailscreen_month_4">апреля</string>
+    <string name="detailscreen_month_5">мая</string>
+    <string name="detailscreen_month_6">июня</string>
+    <string name="detailscreen_month_7">июля</string>
+    <string name="detailscreen_month_8">августа</string>
+    <string name="detailscreen_month_9">сентября</string>
+    <string name="detailscreen_month_10">октября</string>
+    <string name="detailscreen_month_11">ноября</string>
+    <string name="detailscreen_month_12">декабря</string>
+
+    <string name="detailscreen_out_of_5">из 5</string>
+    <string name="detailscreen_reviews_count">%1$d отзывов</string>
+
+    <string name="detailscreen_reviews_empty">Нет отзывов</string>
+    <string name="detailscreen_back">Назад</string>
+    <string name="detailscreen_favorite">Избранное</string>
+    <string name="detailscreen_menu">Меню</string>
+
+    <string name="detailscreen_tab_info">Инфо</string>
+    <string name="detailscreen_tab_reviews">Отзывы</string>
+    <string name="detailscreen_tab_syllabus">Программа</string>
+
+    <string name="detailscreen_button_continue">Продолжить обучение</string>
+    <string name="detailscreen_button_enroll">Записаться</string>
+    <string name="detailscreen_lessons_count">%1$d уроков</string>
+    <string name="detailscreen_learners_count">%1$d учеников</string>
+
+    <string name="detailscreen_summary">Описание</string>
+    <string name="detailscreen_description">Подробности</string>
+    <string name="detailscreen_skills">Навыки</string>
+    <string name="detailscreen_requirements">Требования</string>
+    <string name="detailscreen_target_audience">Для кого курс</string>
+    <string name="detailscreen_authors">Авторы</string>
+    <string name="detailscreen_course_info">Информация о курсе</string>
+
+    <string name="detailscreen_duration">Длительность: %1$s</string>
+    <string name="detailscreen_lessons">Уроки: %1$s</string>
+    <string name="detailscreen_language">Язык: %1$s</string>
+
+    <string name="detailscreen_price">Цена: %1$s</string>
+
+    <string name="detailscreen_certificate_available">Сертификат: есть</string>
+    <string name="detailscreen_certificate_not_available">Сертификата нет</string>
+    <string name="detailscreen_certificate_from">Сертификат от %1$s баллов</string>
+    <string name="detailscreen_certificate_distinction">С отличием от %1$s баллов</string>
+
+    <string name="detailscreen_free">Бесплатно</string>
+    <string name="detailscreen_paid">Платно</string>
+    <string name="detailscreen_lesson_time">≈ %1$d мин</string>
 </resources>

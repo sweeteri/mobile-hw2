@@ -1,4 +1,4 @@
-package com.sweeteri.stepikclient.presentation.course
+package com.sweeteri.stepikclient.presentation.course.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,13 +16,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.sweeteri.stepikclient.data.local.model.CourseDetail
+import com.sweeteri.stepikclient.generated.resources.Res
+import com.sweeteri.stepikclient.generated.resources.detailscreen_button_continue
+import com.sweeteri.stepikclient.generated.resources.detailscreen_button_enroll
+import com.sweeteri.stepikclient.generated.resources.detailscreen_learners_count
+import com.sweeteri.stepikclient.generated.resources.detailscreen_lessons_count
+import com.sweeteri.stepikclient.generated.resources.detailscreen_reviews_count
+import com.sweeteri.stepikclient.presentation.ui.theme.StepikTheme
+import org.jetbrains.compose.resources.stringResource
+
 
 @Composable
 fun CourseHeader(
@@ -40,7 +48,11 @@ fun CourseHeader(
             enabled = !course.isEnrolled,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(if (course.isEnrolled) "Продолжить обучение" else "Записаться")
+            Text(
+                if (course.isEnrolled) stringResource(Res.string.detailscreen_button_continue) else stringResource(
+                    Res.string.detailscreen_button_enroll
+                )
+            )
         }
 
         Spacer(Modifier.height(12.dp))
@@ -52,21 +64,21 @@ fun CourseHeader(
             Text("${course.average} ★", style = MaterialTheme.typography.bodyMedium)
 
             Text(
-                "${course.reviewCount} отзывов",
+                stringResource(Res.string.detailscreen_reviews_count, course.reviewCount),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray
+                color = StepikTheme.colors.textSecondary
             )
 
             Text(
-                "${course.lessonCount} уроков",
+                stringResource(Res.string.detailscreen_lessons_count, course.lessonCount),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray
+                color = StepikTheme.colors.textSecondary
             )
 
             Text(
-                "${course.learnersCount} учеников",
+                stringResource(Res.string.detailscreen_learners_count, course.learnersCount),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray
+                color = StepikTheme.colors.textSecondary
             )
         }
 

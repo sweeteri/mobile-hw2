@@ -1,15 +1,22 @@
 package com.sweeteri.stepikclient.presentation.course
 
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.sweeteri.stepikclient.generated.resources.Res
+import com.sweeteri.stepikclient.generated.resources.home_error_button
+import com.sweeteri.stepikclient.generated.resources.home_error_title
+import com.sweeteri.stepikclient.presentation.common.components.ErrorView
+import com.sweeteri.stepikclient.presentation.common.components.PaginationLoader
+import com.sweeteri.stepikclient.presentation.course.components.CourseTopBar
+import com.sweeteri.stepikclient.presentation.course.content.CourseContent
+import com.sweeteri.stepikclient.presentation.course.state.CourseDetailIntent
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CourseDetailScreen(
     courseId: Int,
@@ -19,7 +26,7 @@ fun CourseDetailScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(courseId) {
-        viewModel.loadCourseDetail(courseId)
+        viewModel.process(CourseDetailIntent.Load(courseId))
     }
 
     Scaffold(
@@ -27,15 +34,21 @@ fun CourseDetailScreen(
     ) { padding ->
 
         when {
-            state.isLoading && state.course == null -> LoadingState(padding)
-            state.error != null -> ErrorState(state.error!!, padding) {
-                viewModel.loadCourseDetail(courseId)
-            }
+            state.isLoading -> PaginationLoader()
 
-            state.course != null -> CourseContent(
-                course = state.course!!,
+            state.error != null -> ErrorView(
+                title = stringResource(Res.string.home_error_title),
+                message = state.error ?: "",
+                retryMessage = stringResource(Res.string.home_error_button),
+                onRetry = {
+                    viewModel.process(CourseDetailIntent.Load(courseId))
+                }
+            )
+
+            else -> CourseContent(
+                state = state,
                 padding = padding,
-                onEnroll = { viewModel.enroll(state.course!!.id.toInt(), 0) }
+                onIntent = viewModel::process
             )
         }
     }

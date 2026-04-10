@@ -22,6 +22,7 @@ import com.sweeteri.stepikclient.data.repository.ProfileRepository
 import com.sweeteri.stepikclient.data.repository.ProfileRepositoryImpl
 import com.sweeteri.stepikclient.domain.usecase.EnrollCourseUseCase
 import com.sweeteri.stepikclient.domain.usecase.GetCourseDetailUseCase
+import com.sweeteri.stepikclient.domain.usecase.GetCourseReviewsUseCase
 import com.sweeteri.stepikclient.domain.usecase.GetCoursesUseCase
 import com.sweeteri.stepikclient.domain.usecase.LoginUseCase
 import com.sweeteri.stepikclient.domain.usecase.LogoutUseCase
@@ -70,6 +71,7 @@ val appModule = module {
     single { SetOnboardingShownUseCase(get()) }
     single { GetCourseDetailUseCase(get()) }
     single { EnrollCourseUseCase(get()) }
+    single { GetCourseReviewsUseCase(get()) }
 
 
     viewModel { MainViewModel(get()) }
@@ -78,5 +80,5 @@ val appModule = module {
     viewModel { StartViewModel(get()) }
     viewModel { OnboardingViewModel(get()) }
     viewModel { SearchViewModel(get()) }
-    viewModel { CourseDetailViewModel(get()) }
+    viewModel { CourseDetailViewModel(get(), get(), get()) }
 }

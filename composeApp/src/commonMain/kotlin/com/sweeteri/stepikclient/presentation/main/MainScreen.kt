@@ -13,6 +13,7 @@ import com.sweeteri.core.UiEvent
 import com.sweeteri.stepikclient.generated.resources.Res
 import com.sweeteri.stepikclient.generated.resources.home_title
 import com.sweeteri.stepikclient.presentation.common.BaseListScreen
+import com.sweeteri.stepikclient.presentation.common.CourseCardSkeleton
 import com.sweeteri.stepikclient.presentation.common.components.CourseCard
 import com.sweeteri.stepikclient.presentation.common.components.FullScreenStateOverlay
 import com.sweeteri.stepikclient.presentation.common.components.PaginationErrorRow
@@ -64,7 +65,7 @@ fun MainScreen(
             })
         },
         loaderContent = {
-            PaginationLoader()
+            CourseCardSkeleton()
         },
         errorContent = { onRetry ->
             PaginationErrorRow(onRetry)

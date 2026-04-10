@@ -10,10 +10,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.sweeteri.core.UiEvent
 import com.sweeteri.stepikclient.presentation.common.BaseListScreen
+import com.sweeteri.stepikclient.presentation.common.CourseCardSkeleton
 import com.sweeteri.stepikclient.presentation.common.components.CourseCard
 import com.sweeteri.stepikclient.presentation.common.components.FullScreenStateOverlay
 import com.sweeteri.stepikclient.presentation.common.components.PaginationErrorRow
-import com.sweeteri.stepikclient.presentation.common.components.PaginationLoader
 import com.sweeteri.stepikclient.presentation.common.extensions.OnBottomReached
 import com.sweeteri.stepikclient.presentation.navigation.Screen
 import com.sweeteri.stepikclient.presentation.search.components.SearchField
@@ -59,7 +59,7 @@ fun SearchScreen(
                 navController.navigate(Screen.CourseDetail.createRoute(courseIdInt))
             })
         },
-        loaderContent = { PaginationLoader() },
+        loaderContent = { CourseCardSkeleton() },
         errorContent = { onRetry -> PaginationErrorRow(onRetry) },
         emptyContent = { FullScreenStateOverlay(
             isLoading = state.listState.isLoading,
